@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Painel Dashboard</title>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="src/doacao.png" alt="imagem da logo">
+            </div>
+
+            <span class="logo_name">Hemonúcleo CZ</span>
+        </div>
+
+        <div class="menu-itens">
+            <ul class="nav-links">
+                <li><a href="#">
+                    <i class="uil uil-chart-pie"></i>
+                    <span class="link-name">Dashboard</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-users-alt"></i>
+                    <span class="link-name">Funcionários</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-clinic-medical"></i>
+                    <span class="link-name">Estoque Sanguíneo</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-analytics"></i>
+                    <span class="link-name">Entrada e Saída</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-calendar-alt"></i>
+                    <span class="link-name">Agendamentos</span>
+                </a></li>
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="login.html">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                        <span class="link-name">Dark Mode</span>
+                    </a>
+
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Pesquise aqui...">
+            </div>
+
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Dashboard</span>
+                </div>
+
+                <div class="boxes">
+                    <div class="box box1">
+                        <i class="uil uil-plus-circle"></i>
+                        <span class="text">Bolsas Adicionadas</span>
+                        <span class="number">50</span>
+                    </div>
+
+                    <div class="box box2">
+                        <i class="uil uil-microscope"></i>
+                        <span class="text">Em análise</span>
+                        <span class="number">15</span>
+                    </div>
+
+                    <div class="box box3">
+                        <i class="uil uil-ambulance"></i>
+                        <span class="text">Doações Realizadas</span>
+                        <span class="number">11</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Atividade Recente</span>
+                </div>
+
+                <div class="activity-data">
+                    <div class="data names">
+                        <span class="data-title">Nome</span>
+                        <span class="data-list">João da Silva</span>
+                        <span class="data-list">Manoela Lins</span>
+                        <span class="data-list">Pedro Joaquim</span>
+                        <span class="data-list">Amanda Nogueira</span>
+                        <span class="data-list">Evelin Lopes</span>
+                        <span class="data-list">Kaique Medeiros</span>
+                        <span class="data-list">Luan Mendes</span>
+                    </div>
+
+                    <div class="data email">
+                        <span class="data-title">Email</span>
+                        <span class="data-list">joãosilva@gmail.com</span>
+                        <span class="data-list">manoelalins@gmail.com</span>
+                        <span class="data-list">pedrojoaquim@gmail.com</span>
+                        <span class="data-list">amandanogueira@gmail.com</span>
+                        <span class="data-list">evelinlopes@gmail.com</span>
+                        <span class="data-list">kaiquemedeiros@gmail.com</span>
+                        <span class="data-list">luanmendes@gmail.com</span>
+                    </div>
+
+                    <div class="data date">
+                        <span class="data-title">Data</span>
+                        <span class="data-list">2022-02-12</span>
+                        <span class="data-list">2022-02-12</span>
+                        <span class="data-list">2022-02-13</span>
+                        <span class="data-list">2022-02-13</span>
+                        <span class="data-list">2022-02-14</span>
+                        <span class="data-list">2022-02-14</span>
+                        <span class="data-list">2022-02-15</span>
+                    </div>
+
+                    <div class="data type">
+                        <span class="data-title">Tipo</span>
+                        <span class="data-list">Doação</span>
+                        <span class="data-list">Doação</span>
+                        <span class="data-list">Retirada</span>
+                        <span class="data-list">Doação</span>
+                        <span class="data-list">Retirada</span>
+                        <span class="data-list">Retirada</span>
+                        <span class="data-list">Doação</span>
+                    </div>
+
+                    <div class="data status">
+                        <span class="data-title">Status</span>
+                        <span class="data-list">Em Espera</span>
+                        <span class="data-list">Recusado</span>
+                        <span class="data-list">Aceito</span>
+                        <span class="data-list">Aceito</span>
+                        <span class="data-list">Em Espera</span>
+                        <span class="data-list">Recusado</span>
+                        <span class="data-list">Aceito</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
