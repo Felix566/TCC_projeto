@@ -1,4 +1,10 @@
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const User = require("../models/User");
+
+// helpers
+const createUserToken = require("../helpers/create-user-token");
 
 module.exports = class UserController {
   static async register(req, res) {
@@ -45,6 +51,26 @@ module.exports = class UserController {
     if (userExists) {
       res.status(422).json({ message: "Email já cadastrado!" });
       return;
+    }
+
+    // create a password
+    const salt = await bcrypt.genSalt(12);
+    const passwordhash = await bcrypt.hash(password, salt);
+
+    // create a user
+    const user = new User({
+      name: name,
+      email: email,
+      phone: phone,
+      password: passwordhash,
+    });
+
+    try {
+      const newUser = await user.save();
+
+      await createUserToken(newUser, req, res);
+    } catch (error) {
+      res.status(500).json({ message: error });
     }
   }
 };
