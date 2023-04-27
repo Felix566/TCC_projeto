@@ -7,6 +7,7 @@ const User = require("../models/User");
 const createUserToken = require("../helpers/create-user-token");
 const getToken = require("../helpers/get-token");
 const getUserById = require("../helpers/get-user-by-token");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = class UserController {
   static async register(req, res) {
@@ -74,6 +75,14 @@ module.exports = class UserController {
     } catch (error) {
       res.status(500).json({ message: error });
     }
+  }
+
+  static async getAll(req, res) {
+    const users = await User.find().sort("-createdAt");
+
+    res.status(200).json({
+      users: users,
+    });
   }
 
   static async login(req, res) {
@@ -213,5 +222,26 @@ module.exports = class UserController {
       res.status(500).json({ message: error });
       return;
     }
+  }
+
+  static async deleteUser(req, res) {
+    const id = req.params.id;
+
+    // check if id is valid
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "ID inválido!" });
+      return;
+    }
+
+    // check if user exists
+    const user = await User.findOne({ _id: id });
+
+    if (!user) {
+      res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    await User.findByIdAndRemove(id);
+
+    res.status(200).json({ message: "Usuário removido com sucesso!" });
   }
 };
