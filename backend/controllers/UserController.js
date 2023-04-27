@@ -6,6 +6,7 @@ const User = require("../models/User");
 // helpers
 const createUserToken = require("../helpers/create-user-token");
 const getToken = require("../helpers/get-token");
+const getUserById = require("../helpers/get-user-by-token");
 
 module.exports = class UserController {
   static async register(req, res) {
@@ -146,9 +147,71 @@ module.exports = class UserController {
   }
 
   static async editUser(req, res) {
-    res.status(200).json({
-      message: "deu certo update!",
-    });
-    return;
+    const id = req.params.id;
+
+    // check if user exists
+    const token = getToken(req);
+    const user = await getUserById(token);
+
+    const { name, email, phone, password, confirmpassword } = req.body;
+
+    //validations
+    if (!name) {
+      res.status(422).json({ message: "O nome é obrigatório!" });
+      return;
+    }
+
+    user.name = name;
+
+    if (!email) {
+      res.status(422).json({ message: "O email é obrigatório!" });
+      return;
+    }
+
+    // check if has already taken
+    const userExists = await User.findOne({ email: email });
+
+    if (user.email !== email && userExists) {
+      res.status(422).json({
+        message: "Email já está em uso, tente outro!",
+      });
+      return;
+    }
+
+    user.email = email;
+
+    if (!phone) {
+      res.status(422).json({ message: "O telefone é obrigatório!" });
+      return;
+    }
+
+    user.phone = phone;
+
+    if (password != confirmpassword) {
+      res.status(422).json({ message: "As senhas não conferem!" });
+      return;
+    } else if (password === confirmpassword && password != null) {
+      // creating password
+      const salt = await bcrypt.genSalt(12);
+      const passwordhash = await bcrypt.hash(password, salt);
+
+      user.password = passwordhash;
+    }
+
+    try {
+      // returns user updated data
+      await User.findOneAndUpdate(
+        { _id: user._id },
+        { $set: user },
+        { new: true }
+      );
+
+      res.status(200).json({
+        message: "Usuário atualizado com sucesso!",
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
+      return;
+    }
   }
 };
