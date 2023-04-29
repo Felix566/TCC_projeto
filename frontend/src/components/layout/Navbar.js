@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 
+import { FaUserCircle, FaArrowRight, FaRegistered } from "react-icons/fa";
+
 import styles from "./Navbar.module.css";
 
 import Logo from "../../assets/img/doacao.png";
@@ -19,6 +21,7 @@ function Navbar() {
       </div>
       <ul>
         <li>
+          <FaUserCircle />
           <Link to="/">Usuários</Link>
         </li>
         {authenticated ? (
@@ -29,9 +32,11 @@ function Navbar() {
           <>
             <li>
               <Link to="/Login">Entrar</Link>
+              <FaArrowRight />
             </li>
             <li>
               <Link to="/register">Cadastrar</Link>
+              <FaRegistered />
             </li>
           </>
         )}

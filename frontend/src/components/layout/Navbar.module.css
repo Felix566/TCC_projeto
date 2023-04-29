@@ -38,6 +38,8 @@
   transition: 0.5s;
   padding: 0.5em 0.8em;
   border-radius: 5px;
+  text-align: center;
+  align-items: center;
 }
 
 .navbar li:hover {

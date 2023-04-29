@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import styles from "../../form/Form.module.css";
 
+import { FaArrowRight } from "react-icons/fa";
+
 /* context */
 import { Context } from "../../../context/UserContext";
 
@@ -39,6 +41,7 @@ function Login() {
           handleOnChange={handleChange}
         />
         <input type="submit" value="Entrar" />
+        <FaArrowRight />
       </form>
       <p>
         Não é registrado? <Link to="/register">Clique aqui!</Link>
