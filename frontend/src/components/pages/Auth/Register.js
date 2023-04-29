@@ -13,7 +13,7 @@ function Register() {
   const { register } = useContext(Context);
 
   function handleChange(e) {
-    setUser({ ...user, [e.target.name]: e.targer.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   }
 
   function handleSubmit(e) {

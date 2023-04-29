@@ -41,7 +41,7 @@ export default function useAuth() {
 
     localStorage.setItem("token", JSON.stringify(data.token));
 
-    navigate.push("/");
+    navigate("/");
   }
 
   return { authenticated, register };
