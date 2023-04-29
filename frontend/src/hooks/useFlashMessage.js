@@ -1,9 +1,9 @@
 import bus from "../utils/bus";
 
 export default function useFlashMessage() {
-  function setFlashMessage(mgs, type) {
+  function setFlashMessage(msg, type) {
     bus.emit("flash", {
-      message: mgs,
+      message: msg,
       type: type,
     });
   }
