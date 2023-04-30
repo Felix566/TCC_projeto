@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 
-import { FaUserCircle, FaArrowRight, FaRegistered } from "react-icons/fa";
+import { GoHome, GoSignIn, GoSignOut } from "react-icons/go";
+import { IoPersonAddSharp } from "react-icons/io5";
+import { BsPersonVcard } from "react-icons/bs";
 
 import styles from "./Navbar.module.css";
 
@@ -21,22 +23,28 @@ function Navbar() {
       </div>
       <ul>
         <li>
-          <FaUserCircle />
-          <Link to="/">Usuários</Link>
+          <GoHome size={22} color="white" />
+          <Link to="/">Home</Link>
         </li>
         {authenticated ? (
           <>
+            <li>
+              <BsPersonVcard size={22} color="white" />
+              <Link to="/user/profile">Perfil</Link>
+            </li>
+
             <li onClick={logout}>Sair</li>
+            <GoSignOut size={22} color="white" />
           </>
         ) : (
           <>
             <li>
+              <GoSignIn size={22} color="white" />
               <Link to="/Login">Entrar</Link>
-              <FaArrowRight />
             </li>
             <li>
+              <IoPersonAddSharp size={22} color="white" />
               <Link to="/register">Cadastrar</Link>
-              <FaRegistered />
             </li>
           </>
         )}
