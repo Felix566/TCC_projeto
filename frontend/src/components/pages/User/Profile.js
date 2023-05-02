@@ -7,11 +7,15 @@ import formStyles from "../../form/Form.module.css";
 
 import Input from "../../form/Input";
 
-import useflashMessage from "../../../hooks/useFlashMessage";
+/* hooks */
+import useFlashMessage from "../../../hooks/useFlashMessage";
+import RoundedImage from "../../layout/RoundedImage";
 
 function Profile() {
   const [user, setUser] = useState({});
+  const [preview, setPreview] = useState();
   const [token] = useState(localStorage.getItem("token") || "");
+  const { setFlashMessage } = useFlashMessage();
 
   useEffect(() => {
     api
@@ -26,36 +30,66 @@ function Profile() {
   }, [token]);
 
   function handleChange(e) {
-    setUser({ ...user, [e.target.name]: e.targer.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
+  }
+
+  function onFileChange(e) {
+    setPreview(e.target.files[0]);
+    setUser({ ...user, [e.target.name]: e.target.files[0] });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    let msgText = "Dados atualizados com sucesso!";
     let msgType = "sucess";
 
-    try {
-      const data = await api
-        .put(`/users/edit/${user._id}`, user, {})
-        .then((response) => {
-          return response.data;
-        });
-    } catch (error) {
-      msgText = error.response.data.message;
-      msgType = "error";
-    }
+    const formData = new FormData();
 
-    setFlashMessage(msgText, msgType);
+    await Object.keys(user).forEach((key) => formData.append(key, user[key]));
+
+    formData.append("user", formData);
+
+    const data = await api
+      .patch(`/users/edit/${user._id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => {
+        msgType = "error";
+        return err.response.data;
+      });
+
+    setFlashMessage(data.message, msgType);
   }
 
   return (
     <section>
       <div className={styles.profile_header}>
         <h1>Profile</h1>
-        <p>Edite suas Informações</p>
+        {(user.image || preview) && (
+          <RoundedImage
+            src={
+              preview
+                ? URL.createObjectURL(preview)
+                : `${process.env.REACT_APP_API}/images/users/${user.image}`
+            }
+            alt={user.name}
+          />
+        )}
       </div>
       <form onSubmit={handleSubmit} className={formStyles.form_container}>
+        <Input
+          text="Imagem"
+          type="file"
+          name="image"
+          handleOnChange={onFileChange}
+        />
+
         <Input
           text="E-mail"
           type="email"

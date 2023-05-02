@@ -7,6 +7,7 @@ const User = require("../models/User");
 const createUserToken = require("../helpers/create-user-token");
 const getToken = require("../helpers/get-token");
 const getUserById = require("../helpers/get-user-by-token");
+const { imageUpload } = require("../helpers/image-upload");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = class UserController {
@@ -164,6 +165,12 @@ module.exports = class UserController {
 
     const { name, email, phone, password, confirmpassword } = req.body;
 
+    let image = "";
+
+    if (req.file) {
+      image = req.file.filename;
+    }
+
     //validations
     if (!name) {
       res.status(422).json({ message: "O nome é obrigatório!" });
@@ -189,6 +196,11 @@ module.exports = class UserController {
 
     user.email = email;
 
+    if (image) {
+      const imageName = req.file.filename;
+      user.image = imageName;
+    }
+
     if (!phone) {
       res.status(422).json({ message: "O telefone é obrigatório!" });
       return;
@@ -209,7 +221,7 @@ module.exports = class UserController {
 
     try {
       // returns user updated data
-      await User.findOneAndUpdate(
+      const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
         { $set: user },
         { new: true }
@@ -217,10 +229,10 @@ module.exports = class UserController {
 
       res.status(200).json({
         message: "Usuário atualizado com sucesso!",
+        data: updatedUser,
       });
     } catch (error) {
       res.status(500).json({ message: error });
-      return;
     }
   }
 

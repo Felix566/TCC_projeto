@@ -6,6 +6,7 @@ import useFlashMessage from "./useFlashMessage";
 
 export default function useAuth() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
 
@@ -16,6 +17,8 @@ export default function useAuth() {
       api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
       setAuthenticated(true);
     }
+
+    setLoading(false);
   }, []);
 
   async function register(user) {
@@ -69,10 +72,10 @@ export default function useAuth() {
     setAuthenticated(false);
     localStorage.removeItem("token");
     api.defaults.headers.Authorization = undefined;
-    navigate("/");
+    navigate("/login");
 
     setFlashMessage(msgText, msgType);
   }
 
-  return { authenticated, register, logout, login };
+  return { authenticated, loading, register, logout, login };
 }
