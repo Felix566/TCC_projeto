@@ -120,4 +120,73 @@ module.exports = class BloodController {
 
     res.status(200).json({ message: "Bolsa removida com sucesso!" });
   }
+
+  static async updateBlood(req, res) {
+    const id = req.params.id;
+
+    const {
+      donator,
+      cpf,
+      nasc,
+      age,
+      phone,
+      marital,
+      sex,
+      bloodVolume,
+      bloodType,
+    } = req.body;
+
+    const updatedData = {};
+
+    // check if blood exists
+    const blood = Blood.findOne({ _id: id });
+
+    if (!blood) {
+      res.status(404).json({ message: "Bolsa não encontrada!" });
+      return;
+    }
+
+    //validations
+    if (!donator) {
+      res.send(422).json({ message: "O nome do doador é obrigatório!" });
+      return;
+    } else {
+      updatedData.donator = donator;
+    }
+
+    if (!cpf) {
+      res.send(422).json({ message: "O CPF é obrigatório!" });
+      return;
+    } else {
+      updatedData.cpf = cpf;
+    }
+
+    updatedData.nasc = nasc;
+
+    updatedData.age = age;
+
+    if (!phone) {
+      res.send(422).json({ message: "O telefone é obrigatório!" });
+      return;
+    } else {
+      updatedData.phone = phone;
+    }
+
+    updatedData.marital = marital;
+
+    updatedData.sex = sex;
+
+    updatedData.bloodVolume = bloodVolume;
+
+    if (!bloodType) {
+      res.send(422).json({ message: "A tipagem sanguínea é obrigatória!" });
+      return;
+    } else {
+      updatedData.bloodType = bloodType;
+    }
+
+    await Blood.findByIdAndUpdate(id, updatedData);
+
+    res.status(200).json({ message: "Bolsa atualizada com sucesso!" });
+  }
 };
