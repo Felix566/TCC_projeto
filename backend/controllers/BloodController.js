@@ -3,6 +3,7 @@ const Blood = require("../models/Blood");
 // helpers
 const getToken = require("../helpers/get-token");
 const getUserByToken = require("../helpers/get-user-by-token");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = class BloodController {
   // create a bag blood
@@ -77,5 +78,46 @@ module.exports = class BloodController {
     res.status(200).json({
       bloods: bloods,
     });
+  }
+
+  static async getBloodById(req, res) {
+    const id = req.params.id;
+
+    // check if id is valid
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "ID inválido!" });
+      return;
+    }
+
+    // check if blood exists
+    const blood = Blood.findOne({ _id: id });
+
+    if (!blood) {
+      response.status(404).json({ message: "Bolsa não encontrada!" });
+    }
+
+    res.status(200).json({ blood: blood });
+  }
+
+  static async removeBloodById(req, res) {
+    const id = req.params.id;
+
+    // check if id is valid
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "ID inválido!" });
+      return;
+    }
+
+    // check if blood exists
+    const blood = Blood.findOne({ _id: id });
+
+    if (!blood) {
+      res.status(404).json({ message: "Bolsa não encontrada!" });
+      return;
+    }
+
+    await Blood.findByIdAndRemove(id);
+
+    res.status(200).json({ message: "Bolsa removida com sucesso!" });
   }
 };

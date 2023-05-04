@@ -7,5 +7,7 @@ const verifyToken = require("../helpers/verify-token");
 
 router.post("/create", verifyToken, BloodController.create);
 router.get("/", BloodController.getAll);
+router.get("/:id", BloodController.getBloodById);
+router.delete("/:id", verifyToken, BloodController.removeBloodById);
 
 module.exports = router;
