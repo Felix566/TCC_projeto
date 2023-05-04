@@ -22,6 +22,7 @@ const Blood = mongoose.model(
       },
       phone: {
         type: String,
+        required: true,
       },
       marital: {
         type: String,
@@ -34,6 +35,7 @@ const Blood = mongoose.model(
       },
       bloodType: {
         type: String,
+        required: true,
       },
       user: Object,
     },

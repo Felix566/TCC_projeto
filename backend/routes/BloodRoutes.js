@@ -2,6 +2,10 @@ const router = require("express").Router();
 
 const BloodController = require("../controllers/BloodController");
 
-router.post("/create", BloodController.create);
+// middlewares
+const verifyToken = require("../helpers/verify-token");
+
+router.post("/create", verifyToken, BloodController.create);
+router.get("/", BloodController.getAll);
 
 module.exports = router;
