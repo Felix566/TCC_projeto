@@ -12,7 +12,10 @@ app.use(express.static("public"));
 
 // Routes
 const UserRoutes = require("./routes/UserRoutes");
+const BloodRoutes = require("./routes/BloodRoutes");
+
 app.use("/users", UserRoutes);
+app.use("/bloods", BloodRoutes);
 
 app.listen(process.env.API_PORT, () => {
   console.log(`API rodando na porta ${process.env.API_PORT}`);
