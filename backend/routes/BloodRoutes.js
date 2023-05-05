@@ -6,7 +6,7 @@ const BloodController = require("../controllers/BloodController");
 const verifyToken = require("../helpers/verify-token");
 
 router.post("/create", verifyToken, BloodController.create);
-router.get("/", BloodController.getAll);
+router.get("/donations", BloodController.getAll);
 router.get("/:id", BloodController.getBloodById);
 router.delete("/:id", verifyToken, BloodController.removeBloodById);
 router.patch("/:id", verifyToken, BloodController.updateBlood);

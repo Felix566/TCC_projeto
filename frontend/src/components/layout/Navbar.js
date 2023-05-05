@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { GoHome, GoSignIn, GoSignOut } from "react-icons/go";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { BsPersonVcard } from "react-icons/bs";
+import { BiDonateBlood } from "react-icons/bi";
 
 import styles from "./Navbar.module.css";
 
@@ -28,6 +29,10 @@ function Navbar() {
         </li>
         {authenticated ? (
           <>
+            <li>
+              <BiDonateBlood size={22} color="white" />
+              <Link to="/blood/donations">Doações</Link>
+            </li>
             <li>
               <BsPersonVcard size={22} color="white" />
               <Link to="/user/profile">Perfil</Link>
