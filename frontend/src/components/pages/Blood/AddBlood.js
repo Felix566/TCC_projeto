@@ -1,8 +1,15 @@
 import api from "../../../utils/api";
+
 import styles from "./AddBlood.module.css";
 
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+
+/* components */
+import BloodForm from "../../form/BloodForm";
+
+/* hooks */
+import useFlashMessage from "../../../hooks/useFlashMessage";
 
 function AddBlood() {
   return (
@@ -10,7 +17,7 @@ function AddBlood() {
       <div>
         <h1>Adicione uma Bolsa</h1>
       </div>
-      <p>Formulário</p>
+      <BloodForm btnText="Adicionar" />
     </section>
   );
 }
