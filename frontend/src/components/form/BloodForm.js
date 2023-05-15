@@ -2,31 +2,47 @@ import { useState } from "react";
 
 import formStyles from "./Form.module.css";
 
-import Input from "./Input";
+import Input from "./InputBlood";
 import Select from "./Select";
 
-function BloodForm(handleSubmit, bloodData, btnText) {
+function BloodForm({ handleSubmit, bloodData, btnText }) {
   const [blood, setBlood] = useState(bloodData || {});
   const maritals = ["Solteiro", "Casado", "Viúvo"];
   const sexs = ["Feminino", "Masculino"];
   const bloodTypes = ["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"];
 
-  function handleChange(e) {}
+  function handleChange(e) {
+    setBlood({ ...blood, [e.target.name]: e.target.value });
+  }
 
-  function handleMarital(e) {}
+  function handleMarital(e) {
+    setBlood({
+      ...blood,
+      marital: e.target.options[e.target.selectedIndex].text,
+    });
+  }
 
-  /*donator string
-  cpf string
-  nasc date
-  age number
-  phone string
-  marital string
-  sex string
-  bloodVolume string
-  bloodType string*/
+  function handleSex(e) {
+    setBlood({
+      ...blood,
+      sex: e.target.options[e.target.selectedIndex].text,
+    });
+  }
+
+  function handleBloodType(e) {
+    setBlood({
+      ...blood,
+      bloodType: e.target.options[e.target.selectedIndex].text,
+    });
+  }
+
+  function submit(e) {
+    e.preventDefault();
+    handleSubmit(blood);
+  }
 
   return (
-    <form className={formStyles.form_container}>
+    <form onSubmit={submit} className={formStyles.form_container}>
       <Input
         text="Nome do doador"
         type="text"
@@ -68,10 +84,19 @@ function BloodForm(handleSubmit, bloodData, btnText) {
       />
       <Select
         text="Estado Civil"
+        type="text"
         name="marital"
         options={maritals}
         handleOnChange={handleMarital}
         value={blood.marital || ""}
+      />
+      <Select
+        text="Sexo"
+        type="text"
+        name="sex"
+        options={sexs}
+        handleOnChange={handleSex}
+        value={blood.sex || ""}
       />
       <Input
         text="Volume da Doação"
@@ -80,6 +105,14 @@ function BloodForm(handleSubmit, bloodData, btnText) {
         placeholder="Digite o volume doado"
         handleOnChange={handleChange}
         value={blood.bloodVolume || ""}
+      />
+      <Select
+        text="Tipo Sanguíneo"
+        type="text"
+        name="bloodTypes"
+        options={bloodTypes}
+        handleOnChange={handleBloodType}
+        value={blood.bloodType || ""}
       />
       <input type="submit" value={btnText} />
     </form>

@@ -8,36 +8,34 @@ const ObjectId = require("mongoose").Types.ObjectId;
 module.exports = class BloodController {
   // create a bag blood
   static async create(req, res) {
-    const {
-      donator,
-      cpf,
-      nasc,
-      age,
-      phone,
-      marital,
-      sex,
-      bloodVolume,
-      bloodType,
-    } = req.body;
+    const donator = req.body.donator;
+    const cpf = req.body.cpf;
+    const nasc = req.body.nasc;
+    const age = req.body.age;
+    const phone = req.body.phone;
+    const marital = req.body.marital;
+    const sex = req.body.sex;
+    const bloodVolume = req.body.bloodVolume;
+    const bloodType = req.body.bloodType;
 
     //validations
     if (!donator) {
-      res.send(422).json({ message: "O nome do doador é obrigatório!" });
+      res.status(422).json({ message: "O nome do doador é obrigatório!" });
       return;
     }
 
     if (!cpf) {
-      res.send(422).json({ message: "O CPF é obrigatório!" });
+      res.status(422).json({ message: "O CPF é obrigatório!" });
       return;
     }
 
     if (!phone) {
-      res.send(422).json({ message: "O telefone é obrigatório!" });
+      res.status(422).json({ message: "O telefone é obrigatório!" });
       return;
     }
 
     if (!bloodType) {
-      res.send(422).json({ message: "A tipagem sanguínea é obrigatória!" });
+      res.status(422).json({ message: "A tipagem sanguínea é obrigatória!" });
       return;
     }
 
@@ -47,15 +45,15 @@ module.exports = class BloodController {
 
     // create a bag blood
     const blood = new Blood({
-      donator,
-      cpf,
-      nasc,
-      age,
-      phone,
-      marital,
-      sex,
-      bloodVolume,
-      bloodType,
+      donator: donator,
+      cpf: cpf,
+      nasc: nasc,
+      age: age,
+      phone: phone,
+      marital: marital,
+      sex: sex,
+      bloodVolume: bloodVolume,
+      bloodType: bloodType,
       users: {
         _id: user._id,
         name: user.name,
@@ -72,33 +70,36 @@ module.exports = class BloodController {
     }
   }
 
+  //get all registered blood bags
   static async getAll(req, res) {
     const bloods = await Blood.find().sort("-createdAt");
 
     res.status(200).json({
-      bloods: bloods,
+      bloods,
     });
   }
 
+  //get a specific blood
   static async getBloodById(req, res) {
     const id = req.params.id;
 
     // check if id is valid
-    if (!ObjectId.isValid(id)) {
-      res.status(422).json({ message: "ID inválido!" });
-      return;
-    }
+    // if (!ObjectId.isValid(id)) {
+    //   res.status(422).json({ message: "ID inválido!" });
+    //   return;
+    // }
 
     // check if blood exists
-    const blood = Blood.findOne({ _id: id });
+    const blood = await Blood.findOne({ _id: id });
 
     if (!blood) {
-      response.status(404).json({ message: "Bolsa não encontrada!" });
+      res.status(404).json({ message: "Bolsa não encontrada!" });
     }
 
     res.status(200).json({ blood: blood });
   }
 
+  //remove a blood
   static async removeBloodById(req, res) {
     const id = req.params.id;
 
@@ -109,7 +110,7 @@ module.exports = class BloodController {
     }
 
     // check if blood exists
-    const blood = Blood.findOne({ _id: id });
+    const blood = await Blood.findOne({ _id: id });
 
     if (!blood) {
       res.status(404).json({ message: "Bolsa não encontrada!" });
@@ -124,22 +125,20 @@ module.exports = class BloodController {
   static async updateBlood(req, res) {
     const id = req.params.id;
 
-    const {
-      donator,
-      cpf,
-      nasc,
-      age,
-      phone,
-      marital,
-      sex,
-      bloodVolume,
-      bloodType,
-    } = req.body;
+    const donator = req.body.donator;
+    const cpf = req.body.cpf;
+    const nasc = req.body.nasc;
+    const age = req.body.age;
+    const phone = req.body.phone;
+    const marital = req.body.marital;
+    const sex = req.body.sex;
+    const bloodVolume = req.body.bloodVolume;
+    const bloodType = req.body.bloodType;
 
     const updatedData = {};
 
     // check if blood exists
-    const blood = Blood.findOne({ _id: id });
+    const blood = await Blood.findOne({ _id: id });
 
     if (!blood) {
       res.status(404).json({ message: "Bolsa não encontrada!" });
@@ -148,14 +147,14 @@ module.exports = class BloodController {
 
     //validations
     if (!donator) {
-      res.send(422).json({ message: "O nome do doador é obrigatório!" });
+      res.status(422).json({ message: "O nome do doador é obrigatório!" });
       return;
     } else {
       updatedData.donator = donator;
     }
 
     if (!cpf) {
-      res.send(422).json({ message: "O CPF é obrigatório!" });
+      res.status(422).json({ message: "O CPF é obrigatório!" });
       return;
     } else {
       updatedData.cpf = cpf;
@@ -166,7 +165,7 @@ module.exports = class BloodController {
     updatedData.age = age;
 
     if (!phone) {
-      res.send(422).json({ message: "O telefone é obrigatório!" });
+      res.status(422).json({ message: "O telefone é obrigatório!" });
       return;
     } else {
       updatedData.phone = phone;
@@ -179,7 +178,7 @@ module.exports = class BloodController {
     updatedData.bloodVolume = bloodVolume;
 
     if (!bloodType) {
-      res.send(422).json({ message: "A tipagem sanguínea é obrigatória!" });
+      res.status(422).json({ message: "A tipagem sanguínea é obrigatória!" });
       return;
     } else {
       updatedData.bloodType = bloodType;
