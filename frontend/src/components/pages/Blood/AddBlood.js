@@ -27,6 +27,12 @@ function AddBlood() {
 
     formData.append(blood, bloodFormData);
 
+    // for (const key in blood) {
+    //   formData.append(key, blood[key]);
+    // }
+
+    console.log(blood);
+
     const data = await api
       .post("/bloods/create", formData, {
         headers: {

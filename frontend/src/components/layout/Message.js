@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import bus from "../../utils/bus";
 
 import styles from "./Message.module.css";
 
 function Message() {
-  const [visibility, setVisibility] = useState(false);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
+  let [visibility, setVisibility] = useState(false);
+  let [message, setMessage] = useState("");
+  let [type, setType] = useState("");
 
   useEffect(() => {
     bus.addListener("flash", ({ message, type }) => {
@@ -16,7 +16,7 @@ function Message() {
 
       setTimeout(() => {
         setVisibility(false);
-      }, 3000);
+      }, 4000);
     });
   }, []);
 

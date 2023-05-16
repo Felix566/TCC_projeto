@@ -7,9 +7,11 @@
 .form_control label {
   margin-bottom: 0.6em;
   font-weight: bold;
+  font-size: 1.2em;
 }
 
 .form_control select {
   padding: 0.7em;
   border: 1px solid #777;
+  border-radius: 5px;
 }

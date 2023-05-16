@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import formStyles from "./Form.module.css";
 
-import Input from "./InputBlood";
+import InputBlood from "./InputBlood";
 import Select from "./Select";
 
 function BloodForm({ handleSubmit, bloodData, btnText }) {
@@ -43,7 +43,7 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
 
   return (
     <form onSubmit={submit} className={formStyles.form_container}>
-      <Input
+      <InputBlood
         text="Nome do doador"
         type="text"
         name="donator"
@@ -51,7 +51,7 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
         handleOnChange={handleChange}
         value={blood.donator || ""}
       />
-      <Input
+      <InputBlood
         text="CPF do doador"
         type="text"
         name="cpf"
@@ -59,14 +59,14 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
         handleOnChange={handleChange}
         value={blood.cpf || ""}
       />
-      <Input
+      <InputBlood
         text="Data de Nascimento"
         type="date"
         name="nasc"
         handleOnChange={handleChange}
         value={blood.nasc || ""}
       />
-      <Input
+      <InputBlood
         text="Idade do Doador"
         type="number"
         name="age"
@@ -74,7 +74,7 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
         handleOnChange={handleChange}
         value={blood.age || ""}
       />
-      <Input
+      <InputBlood
         text="Telefone do Doador"
         type="text"
         name="phone"
@@ -98,8 +98,8 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
         handleOnChange={handleSex}
         value={blood.sex || ""}
       />
-      <Input
-        text="Volume da Doação"
+      <InputBlood
+        text="Volume da Doação (em mL)"
         type="text"
         name="bloodVolume"
         placeholder="Digite o volume doado"
