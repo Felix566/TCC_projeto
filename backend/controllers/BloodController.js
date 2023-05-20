@@ -1,4 +1,4 @@
-const Blood = require("../models/Blood");
+const Blood = require("../models/Blood").default;
 
 // helpers
 const getToken = require("../helpers/get-token");
@@ -8,36 +8,38 @@ const ObjectId = require("mongoose").Types.ObjectId;
 module.exports = class BloodController {
   // create a bag blood
   static async create(req, res) {
-    const donator = req.body.donator;
-    const cpf = req.body.cpf;
-    const nasc = req.body.nasc;
-    const age = req.body.age;
-    const phone = req.body.phone;
-    const marital = req.body.marital;
-    const sex = req.body.sex;
-    const bloodVolume = req.body.bloodVolume;
-    const bloodType = req.body.bloodType;
+    const {
+      donator,
+      cpf,
+      nasc,
+      age,
+      phone,
+      marital,
+      sex,
+      bloodVolume,
+      bloodType,
+    } = req.body;
 
     //validations
-    if (!donator) {
-      res.status(422).json({ message: "O nome do doador é obrigatório!" });
-      return;
-    }
+    // if (!donator) {
+    //   return res
+    //     .status(422)
+    //     .json({ message: "O nome do doador é obrigatório!" });
+    // }
 
-    if (!cpf) {
-      res.status(422).json({ message: "O CPF é obrigatório!" });
-      return;
-    }
+    // if (!cpf) {
+    //   return res.status(422).json({ message: "O CPF é obrigatório!" });
+    // }
 
-    if (!phone) {
-      res.status(422).json({ message: "O telefone é obrigatório!" });
-      return;
-    }
+    // if (!phone) {
+    //   return res.status(422).json({ message: "O telefone é obrigatório!" });
+    // }
 
-    if (!bloodType) {
-      res.status(422).json({ message: "A tipagem sanguínea é obrigatória!" });
-      return;
-    }
+    // if (!bloodType) {
+    //   return res
+    //     .status(422)
+    //     .json({ message: "A tipagem sanguínea é obrigatória!" });
+    // }
 
     // get a user
     const token = getToken(req);
@@ -62,11 +64,12 @@ module.exports = class BloodController {
 
     try {
       const newBlood = await blood.save();
-      res
-        .status(201)
-        .json({ message: "Bolsa sanguínea adicionada com sucesso!", newBlood });
+      return res.status(201).json({
+        message: "Bolsa sanguínea adicionada com sucesso!",
+        blood: newBlood,
+      });
     } catch (error) {
-      res.status(500).json({ message: error });
+      return res.status(500).json({ message: error });
     }
   }
 
@@ -74,7 +77,7 @@ module.exports = class BloodController {
   static async getAll(req, res) {
     const bloods = await Blood.find().sort("-createdAt");
 
-    res.status(200).json({
+    return res.status(200).json({
       bloods,
     });
   }
@@ -85,18 +88,17 @@ module.exports = class BloodController {
 
     // check if id is valid
     // if (!ObjectId.isValid(id)) {
-    //   res.status(422).json({ message: "ID inválido!" });
-    //   return;
+    //   return res.status(422).json({ message: "ID inválido!" });
     // }
 
     // check if blood exists
     const blood = await Blood.findOne({ _id: id });
 
     if (!blood) {
-      res.status(404).json({ message: "Bolsa não encontrada!" });
+      return res.status(404).json({ message: "Bolsa não encontrada!" });
     }
 
-    res.status(200).json({ blood: blood });
+    return res.status(200).json({ blood: blood });
   }
 
   //remove a blood
@@ -105,35 +107,35 @@ module.exports = class BloodController {
 
     // check if id is valid
     if (!ObjectId.isValid(id)) {
-      res.status(422).json({ message: "ID inválido!" });
-      return;
+      return res.status(422).json({ message: "ID inválido!" });
     }
 
     // check if blood exists
     const blood = await Blood.findOne({ _id: id });
 
     if (!blood) {
-      res.status(404).json({ message: "Bolsa não encontrada!" });
-      return;
+      return res.status(404).json({ message: "Bolsa não encontrada!" });
     }
 
     await Blood.findByIdAndRemove(id);
 
-    res.status(200).json({ message: "Bolsa removida com sucesso!" });
+    return res.status(200).json({ message: "Bolsa removida com sucesso!" });
   }
 
   static async updateBlood(req, res) {
     const id = req.params.id;
 
-    const donator = req.body.donator;
-    const cpf = req.body.cpf;
-    const nasc = req.body.nasc;
-    const age = req.body.age;
-    const phone = req.body.phone;
-    const marital = req.body.marital;
-    const sex = req.body.sex;
-    const bloodVolume = req.body.bloodVolume;
-    const bloodType = req.body.bloodType;
+    const {
+      donator,
+      cpf,
+      nasc,
+      age,
+      phone,
+      marital,
+      sex,
+      bloodVolume,
+      bloodType,
+    } = req.body;
 
     const updatedData = {};
 
@@ -141,21 +143,20 @@ module.exports = class BloodController {
     const blood = await Blood.findOne({ _id: id });
 
     if (!blood) {
-      res.status(404).json({ message: "Bolsa não encontrada!" });
-      return;
+      return res.status(404).json({ message: "Bolsa não encontrada!" });
     }
 
     //validations
     if (!donator) {
-      res.status(422).json({ message: "O nome do doador é obrigatório!" });
-      return;
+      return res
+        .status(422)
+        .json({ message: "O nome do doador é obrigatório!" });
     } else {
       updatedData.donator = donator;
     }
 
     if (!cpf) {
-      res.status(422).json({ message: "O CPF é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O CPF é obrigatório!" });
     } else {
       updatedData.cpf = cpf;
     }
@@ -165,8 +166,7 @@ module.exports = class BloodController {
     updatedData.age = age;
 
     if (!phone) {
-      res.status(422).json({ message: "O telefone é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O telefone é obrigatório!" });
     } else {
       updatedData.phone = phone;
     }
@@ -178,14 +178,15 @@ module.exports = class BloodController {
     updatedData.bloodVolume = bloodVolume;
 
     if (!bloodType) {
-      res.status(422).json({ message: "A tipagem sanguínea é obrigatória!" });
-      return;
+      return res
+        .status(422)
+        .json({ message: "A tipagem sanguínea é obrigatória!" });
     } else {
       updatedData.bloodType = bloodType;
     }
 
     await Blood.findByIdAndUpdate(id, updatedData);
 
-    res.status(200).json({ message: "Bolsa atualizada com sucesso!" });
+    return res.status(200).json({ message: "Bolsa atualizada com sucesso!" });
   }
 };

@@ -37,7 +37,9 @@ const Blood = mongoose.model(
         type: String,
         required: true,
       },
-      user: Object,
+      user: {
+        type: Object,
+      },
     },
     { timestamps: true }
   )

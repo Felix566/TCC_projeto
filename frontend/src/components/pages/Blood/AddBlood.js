@@ -20,12 +20,21 @@ function AddBlood() {
     let msgType = "success";
 
     const formData = new FormData();
+    formData.append("donator", blood.donator);
+    formData.append("cpf", blood.cpf);
+    formData.append("nasc", blood.nasc);
+    formData.append("age", blood.age);
+    formData.append("phone", blood.phone);
+    formData.append("marital", blood.marital);
+    formData.append("sex", blood.sex);
+    formData.append("bloodVolume", blood.bloodVolume);
+    formData.append("bloodType", blood.bloodType);
 
-    const bloodFormData = await Object.keys(blood).forEach((key) => {
-      formData.append(key, blood[key]);
-    });
+    // await Object.keys(blood).forEach((key) => {
+    //   formData.append([key, blood[key]]);
+    // });
 
-    formData.append(blood, bloodFormData);
+    //formData.append(blood, bloodFormData);
 
     // for (const key in blood) {
     //   formData.append(key, blood[key]);

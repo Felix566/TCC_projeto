@@ -109,7 +109,7 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
       <Select
         text="Tipo Sanguíneo"
         type="text"
-        name="bloodTypes"
+        name="bloodType"
         options={bloodTypes}
         handleOnChange={handleBloodType}
         value={blood.bloodType || ""}
