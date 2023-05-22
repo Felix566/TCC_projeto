@@ -33,6 +33,7 @@
 - [Layout](#art-layout)
 - [Como executar](#rocket-como-executar-o-projeto)
 - [Tecnologias](#hammer_and_pick-tecnologias)
+
 ---
 
 ## :computer: Sobre o projeto
@@ -42,18 +43,22 @@
 ---
 
 ## :gear: Funcionalidades
-- [ ] Cadastrar funcionários responsáveis por utilizar o sistema
-- [ ] Visualizar informações cadastrais
+
+- [ x ] Cadastrar funcionários responsáveis por utilizar o sistema
+- [ x ] Visualizar informações cadastrais
 - [ ] Visualização das bolsas em estoque
-- [ ] Adicionar bolsas sanguíneas ao estoque
+- [ x ] Adicionar bolsas sanguíneas ao estoque
 - [ ] Controle de entrada e saída no estoque
 - [ ] Preenchimento e visualização de relatório mensal
+
 ---
 
 ## :art: Layout
 
 ### Web
+
 adicionar telas da versão web:
+
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
   <img alt="" title="" src="./assets/web.svg" width="400px">
 
@@ -63,8 +68,10 @@ adicionar telas da versão web:
 ---
 
 ## :rocket: Como executar o projeto
+
 Este projeto é divido em duas partes:
-1. Backend (pasta server) 
+
+1. Backend (pasta server)
 2. Frontend (pasta web)
 
 :bulb:Para o Frontend funcionar, é preciso que o Backend esteja sendo executado.
@@ -74,7 +81,7 @@ Este projeto é divido em duas partes:
 ## Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). 
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
 #### :game_die: Rodando o Backend (servidor)
@@ -84,6 +91,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 ---
 
 ## :hammer_and_pick: Tecnologias
+
 As seguintes ferramentas foram usadas na construção do projeto:
 
 ---
