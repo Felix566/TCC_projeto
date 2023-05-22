@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./Input.module.css";
 
 function InputBlood({ type, text, name, placeholder, handleOnChange, value }) {

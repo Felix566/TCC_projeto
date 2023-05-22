@@ -31,15 +31,17 @@ function Navbar() {
           <>
             <li>
               <BiDonateBlood size={22} color="white" />
-              <Link to="/blood/donations">Doações</Link>
+              <Link to="/bloods/donations">Doações</Link>
             </li>
             <li>
               <BsPersonVcard size={22} color="white" />
               <Link to="/user/profile">Perfil</Link>
             </li>
 
-            <li onClick={logout}>Sair</li>
-            <GoSignOut size={22} color="white" />
+            <li onClick={logout}>
+              <GoSignOut size={22} color="white" />
+              Sair
+            </li>
           </>
         ) : (
           <>

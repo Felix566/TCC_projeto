@@ -1,6 +1,5 @@
-import api from "../../../utils/api";
-
 import { useState, useEffect } from "react";
+import api from "../../../utils/api";
 
 import styles from "./Profile.module.css";
 import formStyles from "../../form/Form.module.css";
@@ -45,26 +44,38 @@ function Profile() {
 
     const formData = new FormData();
 
-    await Object.keys(user).forEach((key) => formData.append(key, user[key]));
+    Object.keys(user).forEach((key) => formData.append(key, user[key]));
 
-    formData.append("user", formData);
-
-    const data = await api
-      .patch(`/users/edit/${user._id}`, formData, {
+    //formData.append("user", formData);
+    try {
+      const response = await api.patch(`/users/edit/${user._id}`, formData, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
           "Content-Type": "multipart/form-data",
         },
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => {
-        msgType = "error";
-        return err.response.data;
       });
+      setFlashMessage(response.data.message, msgType);
+    } catch (error) {
+      msgType = "error";
+      setFlashMessage(error.response.data.message, msgType);
+    }
 
-    setFlashMessage(data.message, msgType);
+    // const data = await api
+    //   .patch(`/users/edit/${user._id}`, formData, {
+    //     headers: {
+    //       Authorization: `Bearer ${JSON.parse(token)}`,
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     return response.data;
+    //   })
+    //   .catch((err) => {
+    //     msgType = "error";
+    //     return err.response.data;
+    //   });
+
+    // setFlashMessage(data.message, msgType);
   }
 
   return (

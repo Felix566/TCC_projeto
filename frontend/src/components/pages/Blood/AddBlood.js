@@ -19,36 +19,28 @@ function AddBlood() {
   async function registerBlood(blood) {
     let msgType = "success";
 
-    const formData = new FormData();
-    formData.append("donator", blood.donator);
-    formData.append("cpf", blood.cpf);
-    formData.append("nasc", blood.nasc);
-    formData.append("age", blood.age);
-    formData.append("phone", blood.phone);
-    formData.append("marital", blood.marital);
-    formData.append("sex", blood.sex);
-    formData.append("bloodVolume", blood.bloodVolume);
-    formData.append("bloodType", blood.bloodType);
-
-    // await Object.keys(blood).forEach((key) => {
-    //   formData.append([key, blood[key]]);
-    // });
-
-    //formData.append(blood, bloodFormData);
-
-    // for (const key in blood) {
-    //   formData.append(key, blood[key]);
-    // }
-
-    console.log(blood);
-
     const data = await api
-      .post("/bloods/create", formData, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
+      .post(
+        "/bloods/create",
+        {
+          donator: blood.donator,
+          cpf: blood.cpf,
+          nasc: blood.nasc,
+          age: blood.age,
+          phone: blood.phone,
+          marital: blood.marital,
+          sex: blood.sex,
+          bloodVolume: blood.bloodVolume,
+          bloodType: blood.bloodType,
         },
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        }
+      )
       .then((response) => {
+        navigate("/bloods/donations");
         return response.data;
       })
       .catch((err) => {
@@ -57,10 +49,6 @@ function AddBlood() {
       });
 
     setFlashMessage(data.message, msgType);
-
-    if (msgType !== "error") {
-      navigate("/bloods/donations");
-    }
   }
   return (
     <section className={styles.addBlood_header}>

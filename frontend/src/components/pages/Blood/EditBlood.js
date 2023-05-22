@@ -1,6 +1,6 @@
 import api from "../../../utils/api";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import styles from "./AddBlood.module.css";
@@ -29,15 +29,15 @@ function EditBlood() {
   }, [token, id]);
 
   async function updateBlood(blood) {
-    let msgType = "sucess";
+    let msgType = "success";
 
     const formData = new FormData();
 
-    const bloodFormData = await Object.keys(blood).forEach((key) => {
+    const bloodFormData = Object.keys(blood).forEach((key) => {
       formData.append(key, blood[key]);
     });
 
-    formData.append(blood, bloodFormData);
+    formData.append("blood", bloodFormData);
 
     const data = await api
       .patch(`bloods/${blood._id}`, formData, {

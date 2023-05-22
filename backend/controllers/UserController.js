@@ -16,45 +16,38 @@ module.exports = class UserController {
 
     //validations
     if (!name) {
-      res.status(422).json({ message: "O nome é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O nome é obrigatório!" });
     }
 
     if (!email) {
-      res.status(422).json({ message: "O email é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O email é obrigatório!" });
     }
 
     if (!phone) {
-      res.status(422).json({ message: "O telefone é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O telefone é obrigatório!" });
     }
 
     if (!password) {
-      res.status(422).json({ message: "A senha é obrigatória!" });
-      return;
+      return res.status(422).json({ message: "A senha é obrigatória!" });
     }
 
     if (!confirmpassword) {
-      res
+      return res
         .status(422)
         .json({ message: "A confirmação de senha é obrigatória!" });
-      return;
     }
 
     if (password !== confirmpassword) {
-      res.status(422).json({
+      return res.status(422).json({
         message: "A senha e a confirmação de senha precisam ser iguais!",
       });
-      return;
     }
 
     // check if user exists
     const userExists = await User.findOne({ email: email });
 
     if (userExists) {
-      res.status(422).json({ message: "Email já cadastrado!" });
-      return;
+      return res.status(422).json({ message: "Email já cadastrado!" });
     }
 
     // create a password
@@ -74,14 +67,14 @@ module.exports = class UserController {
 
       await createUserToken(newUser, req, res);
     } catch (error) {
-      res.status(500).json({ message: error });
+      return res.status(500).json({ message: error });
     }
   }
 
   static async getAll(req, res) {
     const users = await User.find().sort("-createdAt");
 
-    res.status(200).json({
+    return res.status(200).json({
       users: users,
     });
   }
@@ -90,33 +83,29 @@ module.exports = class UserController {
     const { email, password } = req.body;
 
     if (!email) {
-      res.status(422).json({ message: "O email é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O email é obrigatório!" });
     }
 
     if (!password) {
-      res.status(422).json({ message: "A senha é obrigatória!" });
-      return;
+      return res.status(422).json({ message: "A senha é obrigatória!" });
     }
 
     // check if user exists
     const user = await User.findOne({ email: email });
 
     if (!user) {
-      res.status(422).json({
+      return res.status(422).json({
         message: "Não há usuário cadastrado com esse email!",
       });
-      return;
     }
 
     //check if password match with db password
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-      res.status(422).json({
+      return res.status(422).json({
         message: "Senha incorreta!!",
       });
-      return;
     }
 
     await createUserToken(user, req, res);
@@ -138,7 +127,7 @@ module.exports = class UserController {
       currentUser = null;
     }
 
-    res.status(200).send(currentUser);
+    return res.status(200).send(currentUser);
   }
 
   static async getUserById(req, res) {
@@ -147,13 +136,12 @@ module.exports = class UserController {
     const user = await User.findById(id).select("-password");
 
     if (!user) {
-      res.status(422).json({
+      return res.status(422).json({
         message: "Usuário não encontrado!",
       });
-      return;
     }
 
-    res.status(200).json({ user });
+    return res.status(200).json({ user });
   }
 
   static async editUser(req, res) {
@@ -173,25 +161,22 @@ module.exports = class UserController {
 
     //validations
     if (!name) {
-      res.status(422).json({ message: "O nome é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O nome é obrigatório!" });
     }
 
     user.name = name;
 
     if (!email) {
-      res.status(422).json({ message: "O email é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O email é obrigatório!" });
     }
 
     // check if has already taken
     const userExists = await User.findOne({ email: email });
 
     if (user.email !== email && userExists) {
-      res.status(422).json({
+      return res.status(422).json({
         message: "Email já está em uso, tente outro!",
       });
-      return;
     }
 
     user.email = email;
@@ -202,15 +187,13 @@ module.exports = class UserController {
     }
 
     if (!phone) {
-      res.status(422).json({ message: "O telefone é obrigatório!" });
-      return;
+      return res.status(422).json({ message: "O telefone é obrigatório!" });
     }
 
     user.phone = phone;
 
     if (password != confirmpassword) {
-      res.status(422).json({ message: "As senhas não conferem!" });
-      return;
+      return res.status(422).json({ message: "As senhas não conferem!" });
     } else if (password === confirmpassword && password != null) {
       // creating password
       const salt = await bcrypt.genSalt(12);
@@ -227,12 +210,12 @@ module.exports = class UserController {
         { new: true }
       );
 
-      res.status(200).json({
+      return res.status(200).json({
         message: "Usuário atualizado com sucesso!",
         data: updatedUser,
       });
     } catch (error) {
-      res.status(500).json({ message: error });
+      return res.status(500).json({ message: error });
     }
   }
 
@@ -241,19 +224,18 @@ module.exports = class UserController {
 
     // check if id is valid
     if (!ObjectId.isValid(id)) {
-      res.status(422).json({ message: "ID inválido!" });
-      return;
+      return res.status(422).json({ message: "ID inválido!" });
     }
 
     // check if user exists
     const user = await User.findOne({ _id: id });
 
     if (!user) {
-      res.status(404).json({ message: "Usuário não encontrado" });
+      return res.status(404).json({ message: "Usuário não encontrado" });
     }
 
     await User.findByIdAndRemove(id);
 
-    res.status(200).json({ message: "Usuário removido com sucesso!" });
+    return res.status(200).json({ message: "Usuário removido com sucesso!" });
   }
 };

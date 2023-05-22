@@ -40,6 +40,10 @@ const Blood = mongoose.model(
       user: {
         type: Object,
       },
+      // funcionario: {
+      //   type: Schema.Types.ObjectId,
+      //   ref: "User",
+      // },
     },
     { timestamps: true }
   )

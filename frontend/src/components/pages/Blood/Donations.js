@@ -15,7 +15,7 @@ function Donations() {
 
   useEffect(() => {
     api
-      .get("/blood/donations", {
+      .get("/bloods/donations", {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
@@ -26,10 +26,10 @@ function Donations() {
   }, [token]);
 
   async function removeBlood(id) {
-    let msgType = "sucess";
+    let msgType = "success";
 
     const data = await api
-      .delete(`/blood/${id}`, {
+      .delete(`/bloods/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
@@ -51,17 +51,18 @@ function Donations() {
     <section>
       <div className={styles.bloodlist_header}>
         <h1>Doações Diárias</h1>
-        <Link to="/blood/add">Adicionar Bolsas</Link>
+        <Link to="/bloods/add">Adicionar Bolsas</Link>
       </div>
 
       <div className={styles.bloodlist_container}>
         {bloods.length > 0 &&
           bloods.map((blood) => (
             <div key={blood._id} className={styles.bloodlist_row}>
-              <span className="bold">{blood.name}</span>
+              <span className="bold">{blood.bloodType}</span>
+              <span className="bold">{blood.user.name}</span>
               <div className={styles.actions}>
                 <>
-                  <Link to={`/blood/edit/${blood._id}`}>Editar</Link>
+                  <Link to={`/bloods/edit/${blood._id}`}>Editar</Link>
                   <button
                     onClick={() => {
                       removeBlood(blood._id);

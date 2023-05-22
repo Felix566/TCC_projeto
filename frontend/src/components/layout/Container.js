@@ -1,9 +1,8 @@
+import React from "react";
 import styles from "./Container.module.css";
 
-import React from "react";
-
-function Container({ children }) {
+const Container = ({ children }) => {
   return <main className={styles.container}>{children}</main>;
-}
+};
 
 export default Container;

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Input from "../../form/Input";
 import { Link } from "react-router-dom";
 
@@ -11,14 +11,14 @@ function Login() {
   const [user, setUser] = useState({});
   const { login } = useContext(Context);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-  }
+  };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
     login(user);
-  }
+  };
 
   return (
     <section className={styles.form_container}>

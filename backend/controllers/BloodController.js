@@ -1,4 +1,4 @@
-const Blood = require("../models/Blood").default;
+const Blood = require("../models/Blood");
 
 // helpers
 const getToken = require("../helpers/get-token");
@@ -21,25 +21,25 @@ module.exports = class BloodController {
     } = req.body;
 
     //validations
-    // if (!donator) {
-    //   return res
-    //     .status(422)
-    //     .json({ message: "O nome do doador é obrigatório!" });
-    // }
+    if (!donator) {
+      return res
+        .status(422)
+        .json({ message: "O nome do doador é obrigatório!" });
+    }
 
-    // if (!cpf) {
-    //   return res.status(422).json({ message: "O CPF é obrigatório!" });
-    // }
+    if (!cpf) {
+      return res.status(422).json({ message: "O CPF é obrigatório!" });
+    }
 
-    // if (!phone) {
-    //   return res.status(422).json({ message: "O telefone é obrigatório!" });
-    // }
+    if (!phone) {
+      return res.status(422).json({ message: "O telefone é obrigatório!" });
+    }
 
-    // if (!bloodType) {
-    //   return res
-    //     .status(422)
-    //     .json({ message: "A tipagem sanguínea é obrigatória!" });
-    // }
+    if (!bloodType) {
+      return res
+        .status(422)
+        .json({ message: "A tipagem sanguínea é obrigatória!" });
+    }
 
     // get a user
     const token = getToken(req);
@@ -56,7 +56,7 @@ module.exports = class BloodController {
       sex: sex,
       bloodVolume: bloodVolume,
       bloodType: bloodType,
-      users: {
+      user: {
         _id: user._id,
         name: user.name,
       },
@@ -87,9 +87,9 @@ module.exports = class BloodController {
     const id = req.params.id;
 
     // check if id is valid
-    // if (!ObjectId.isValid(id)) {
-    //   return res.status(422).json({ message: "ID inválido!" });
-    // }
+    if (!ObjectId.isValid(id)) {
+      return res.status(422).json({ message: "ID inválido!" });
+    }
 
     // check if blood exists
     const blood = await Blood.findOne({ _id: id });
