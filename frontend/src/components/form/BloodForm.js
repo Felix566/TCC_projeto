@@ -39,6 +39,7 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
   function submit(e) {
     e.preventDefault();
     handleSubmit(blood);
+    console.log(blood);
   }
 
   return (

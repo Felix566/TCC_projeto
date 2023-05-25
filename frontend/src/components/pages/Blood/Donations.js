@@ -58,8 +58,12 @@ function Donations() {
         {bloods.length > 0 &&
           bloods.map((blood) => (
             <div key={blood._id} className={styles.bloodlist_row}>
+              <span className="bold">{blood.donator}</span>
               <span className="bold">{blood.bloodType}</span>
               <span className="bold">{blood.user.name}</span>
+              <span className="bold">
+                {new Date(blood.createdAt).toLocaleDateString()}
+              </span>
               <div className={styles.actions}>
                 <>
                   <Link to={`/bloods/edit/${blood._id}`}>Editar</Link>

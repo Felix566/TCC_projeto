@@ -14,6 +14,7 @@ import Home from "./components/pages/Home";
 import Profile from "./components/pages/User/Profile";
 import Donations from "./components/pages/Blood/Donations";
 import AddBlood from "./components/pages/Blood/AddBlood";
+import EditBlood from "./components/pages/Blood/EditBlood";
 
 /* Context */
 import { UserProvider } from "./context/UserContext";
@@ -35,6 +36,8 @@ function App() {
             <Route path="/bloods/donations" element={<Donations />} />
 
             <Route path="/bloods/add" element={<AddBlood />} />
+
+            <Route path="/bloods/edit/:id" element={<EditBlood />} />
 
             <Route path="/" element={<Home />} />
           </Routes>

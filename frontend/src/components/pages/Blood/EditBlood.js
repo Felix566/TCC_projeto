@@ -2,6 +2,7 @@ import api from "../../../utils/api";
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./AddBlood.module.css";
 
@@ -15,6 +16,7 @@ function EditBlood() {
   const [token] = useState(localStorage.getItem("token") || "");
   const { id } = useParams();
   const { setFlashMessage } = useFlashMessage();
+  const navigate = useNavigate();
 
   useEffect(() => {
     api
@@ -31,29 +33,21 @@ function EditBlood() {
   async function updateBlood(blood) {
     let msgType = "success";
 
-    const formData = new FormData();
-
-    const bloodFormData = Object.keys(blood).forEach((key) => {
-      formData.append(key, blood[key]);
-    });
-
-    formData.append("blood", bloodFormData);
-
-    const data = await api
-      .patch(`bloods/${blood._id}`, formData, {
+    try {
+      const response = await api.patch(`/bloods/${blood._id}`, blood, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => {
-        msgType = "error";
-        return err.response.data;
       });
 
-    setFlashMessage(data.message, msgType);
+      const data = response.data;
+      setFlashMessage(data.message, msgType);
+      navigate("/bloods/donations");
+    } catch (error) {
+      msgType = "error";
+      const data = error.response.data;
+      setFlashMessage(data.message, msgType);
+    }
   }
 
   return (
@@ -62,7 +56,8 @@ function EditBlood() {
         <h1>Editar sangue</h1>
         <p>Após a edição, os novos dados serão atualizados no sistema</p>
       </div>
-      {blood.name && (
+      {console.log(blood._id)}
+      {blood._id && (
         <BloodForm
           handleSubmit={updateBlood}
           bloodData={blood}
