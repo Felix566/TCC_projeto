@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../../utils/api";
 
 import styles from "./Profile.module.css";
@@ -15,6 +16,7 @@ function Profile() {
   const [preview, setPreview] = useState();
   const [token] = useState(localStorage.getItem("token") || "");
   const { setFlashMessage } = useFlashMessage();
+  const navigate = useNavigate();
 
   useEffect(() => {
     api
@@ -40,7 +42,7 @@ function Profile() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    let msgType = "sucess";
+    let msgType = "success";
 
     const formData = new FormData();
 
@@ -55,6 +57,7 @@ function Profile() {
         },
       });
       setFlashMessage(response.data.message, msgType);
+      navigate("/home");
     } catch (error) {
       msgType = "error";
       setFlashMessage(error.response.data.message, msgType);

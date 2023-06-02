@@ -6,3 +6,21 @@
 .addBlood_header h1 {
   margin-bottom: 0.2em;
 }
+
+.button {
+  display: inline-block;
+  padding: 0.5em;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}

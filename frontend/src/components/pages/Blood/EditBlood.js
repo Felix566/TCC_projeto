@@ -1,8 +1,7 @@
 import api from "../../../utils/api";
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import styles from "./AddBlood.module.css";
 
@@ -56,13 +55,14 @@ function EditBlood() {
         <h1>Editar sangue</h1>
         <p>Após a edição, os novos dados serão atualizados no sistema</p>
       </div>
-      {console.log(blood._id)}
       {blood._id && (
-        <BloodForm
-          handleSubmit={updateBlood}
-          bloodData={blood}
-          btnText="Editar"
-        />
+        <div>
+          <BloodForm
+            handleSubmit={updateBlood}
+            bloodData={blood}
+            btnText="Editar"
+          />
+        </div>
       )}
     </section>
   );

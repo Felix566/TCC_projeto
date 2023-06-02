@@ -7,7 +7,7 @@ const verifyToken = require("../helpers/verify-token");
 const { imageUpload } = require("../helpers/image-upload");
 
 router.post("/register", UserController.register);
-router.post("/login", UserController.login);
+router.post("/", UserController.login);
 router.get("/checkuser", UserController.checkUser);
 router.get("/:id", UserController.getUserById);
 router.get("/", UserController.getAll);

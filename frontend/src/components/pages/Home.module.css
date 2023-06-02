@@ -1,0 +1,67 @@
+.blood_home_header {
+  margin-bottom: 2em;
+  text-align: center;
+}
+
+.blood_home_header h1 {
+  margin-bottom: 0.3em;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.blood_home_header p {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.blood_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2em;
+}
+
+.blood_table th {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  padding: 1em;
+  text-align: center;
+  border: 2px solid #000000;
+}
+
+.blood_table td {
+  background-color: #fff;
+  color: #0000ff;
+  font-weight: bold;
+  padding: 1em;
+  border: 2px solid #000000;
+}
+
+.blood_table tbody {
+  border: 2px solid #000000;
+}
+
+.blood_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 2em;
+  flex-wrap: wrap;
+}
+
+.blood_group {
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.blood_group h2 {
+  font-weight: bold;
+  font-size: 24px;
+  color: #0000ff;
+}
+
+.blood_group,
+.blood_table {
+  margin-top: 1em;
+}

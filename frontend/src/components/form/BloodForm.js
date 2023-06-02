@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import formStyles from "./Form.module.css";
 
@@ -10,6 +11,7 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
   const maritals = ["Solteiro", "Casado", "Viúvo"];
   const sexs = ["Feminino", "Masculino"];
   const bloodTypes = ["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"];
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setBlood({ ...blood, [e.target.name]: e.target.value });
@@ -39,7 +41,10 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
   function submit(e) {
     e.preventDefault();
     handleSubmit(blood);
-    console.log(blood);
+  }
+
+  function handleCancel() {
+    navigate("/bloods/donations");
   }
 
   return (
@@ -115,7 +120,10 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
         handleOnChange={handleBloodType}
         value={blood.bloodType || ""}
       />
-      <input type="submit" value={btnText} />
+      <div className={formStyles.button_container}>
+        <input type="submit" value={btnText} />
+        <input type="button" value="Cancelar" onClick={handleCancel} />
+      </div>
     </form>
   );
 }

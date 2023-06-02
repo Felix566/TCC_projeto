@@ -14,21 +14,39 @@
   flex-direction: column;
 }
 
-.bloodlist_row {
-  border-bottom: 1px solid #16479d;
-  padding: 1em;
-  margin: 1em;
-  display: flex;
-  align-items: center;
+/* Formato de colunas*/
+.bloodlist_table {
   width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.bloodlist_row span {
-  min-width: 100px;
+.bloodlist_table th,
+.bloodlist_table td {
+  padding: 1em;
+  margin: 1em;
+  text-align: center;
+  border-bottom: 1px solid #16479d;
+  font-weight: bold;
+  color: #16479d;
+}
+
+.bloodlist_table th {
+  background-color: #f5f5f5;
+}
+
+.bloodlist_table td:first-child,
+.bloodlist_table th:first-child {
+  padding-left: 16px;
+}
+
+.bloodlist_table td:last-child {
+  padding-right: 16px;
 }
 
 .actions {
   margin-left: auto;
+  color: aqua;
 }
 
 .actions a,
@@ -49,4 +67,54 @@
 .actions button:hover {
   background-color: #16479d;
   color: #fff;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+/* Estilização do Paginator*/
+.pagination {
+  list-style: none;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination_page {
+  padding: 15px;
+  margin: 6px;
+  cursor: pointer;
+  border-radius: 20%;
+  background-color: #f2f2f2;
+}
+
+.pagination_previous,
+.pagination_next {
+  padding: 8px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #f32d2d;
+}
+
+.pagination_previous:hover,
+.pagination_next:hover {
+  background-color: #d15f5f;
+  color: #fff;
+}
+
+.pagination_active {
+  background-color: #16479d;
+  color: #fff;
+}
+
+.pagination_break {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: default;
+  text-align: center;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }

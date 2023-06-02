@@ -27,7 +27,7 @@ function App() {
         <Message />
         <Container>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
 
             <Route path="/register" element={<Register />} />
 
@@ -39,7 +39,9 @@ function App() {
 
             <Route path="/bloods/edit/:id" element={<EditBlood />} />
 
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+
+            <Route path="*" element={<Login />} />
           </Routes>
         </Container>
         <Footer />

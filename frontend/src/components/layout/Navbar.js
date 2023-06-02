@@ -23,16 +23,18 @@ function Navbar() {
         <h2>Projeto TCC</h2>
       </div>
       <ul>
-        <li>
-          <GoHome size={22} color="white" />
-          <Link to="/">Home</Link>
-        </li>
         {authenticated ? (
           <>
+            <li>
+              <GoHome size={22} color="white" />
+              <Link to="/home">Home</Link>
+            </li>
+
             <li>
               <BiDonateBlood size={22} color="white" />
               <Link to="/bloods/donations">Doações</Link>
             </li>
+
             <li>
               <BsPersonVcard size={22} color="white" />
               <Link to="/user/profile">Perfil</Link>
@@ -47,7 +49,7 @@ function Navbar() {
           <>
             <li>
               <GoSignIn size={22} color="white" />
-              <Link to="/Login">Entrar</Link>
+              <Link to="/">Entrar</Link>
             </li>
             <li>
               <IoPersonAddSharp size={22} color="white" />
