@@ -65,3 +65,56 @@
 .blood_table {
   margin-top: 1em;
 }
+
+/* Estilização dos botões */
+.buttons_container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 20px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #2e1e1e;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  margin-right: 50px;
+}
+
+.button_blue {
+  background-color: #007bff;
+}
+
+.button_blue:hover {
+  background-color: #0056b3;
+}
+
+.button_red {
+  background-color: #dc3545;
+}
+
+.button_red:hover {
+  background-color: #a71f31;
+}
+
+.button_yellow {
+  background-color: #ffc107;
+}
+
+.button_yellow:hover {
+  background-color: #e0a800;
+}
+
+.button_icon {
+  margin-right: 10px;
+}
+
+.button_content {
+  display: flex;
+  align-items: center;
+}

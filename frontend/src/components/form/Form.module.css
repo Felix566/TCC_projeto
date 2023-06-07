@@ -7,11 +7,27 @@
   font-family: "Poppins", sans-serif;
 }
 
+.page_container {
+  background-image: url(../../assets/img/login.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+}
+
 .form_container {
   max-width: 300px;
   margin: 0 auto;
-  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
+}
+
+.form_container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .button_container {
@@ -61,4 +77,8 @@
 .form_container p a {
   color: #5867ec;
   font-weight: bold;
+}
+
+.form_container h1 {
+  margin-bottom: 20px;
 }

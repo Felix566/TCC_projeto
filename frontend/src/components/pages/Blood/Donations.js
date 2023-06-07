@@ -128,7 +128,7 @@ function Donations() {
           previousClassName={styles.pagination_previous}
           nextClassName={styles.pagination_next}
           activeClassName={styles.pagination_active}
-          // renderOnZeroPageCount={null}
+          renderOnZeroPageCount={null}
         />
       </div>
     </section>

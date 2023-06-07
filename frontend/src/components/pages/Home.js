@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import styles from "./Home.module.css";
-// import { Context } from "../../context/UserContext";
+import { FaPlus, FaHandHoldingHeart, FaExchangeAlt } from "react-icons/fa";
 
 function Home() {
   const [bloodStock, setBloodStock] = useState([]);
@@ -92,9 +92,37 @@ function Home() {
             </table>
           </div>
 
-          <Link to="/bloodManagement">
-            Ir para Controle de Entradas e Saídas
-          </Link>
+          <div className={styles.buttons_container}>
+            <div className={styles.button_content}>
+              <Link
+                to="/bloods/add"
+                className={`${styles.button} ${styles.button_blue}`}
+              >
+                <FaPlus className={styles.button_icon} />
+                <span>Adicionar Bolsas</span>
+              </Link>
+            </div>
+
+            <div className={styles.button_content}>
+              <Link
+                to="/bloods/donations"
+                className={`${styles.button} ${styles.button_red}`}
+              >
+                <FaHandHoldingHeart className={styles.button_icon} />
+                <span>Doações Diárias</span>
+              </Link>
+            </div>
+
+            <div className={styles.button_content}>
+              <Link
+                to="/bloodsManagement"
+                className={`${styles.button} ${styles.button_yellow}`}
+              >
+                <FaExchangeAlt className={styles.button_icon} />
+                <span>Controle de Entradas e Saídas</span>
+              </Link>
+            </div>
+          </div>
         </div>
       )}
     </section>
