@@ -1,12 +1,16 @@
 import api from "../../utils/api";
 
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+
+import { Context } from "../../context/UserContext";
 
 import styles from "./Home.module.css";
 import { FaPlus, FaHandHoldingHeart, FaExchangeAlt } from "react-icons/fa";
+import Error from "../layout/Error";
 
 function Home() {
+  const { authenticated } = useContext(Context);
   const [bloodStock, setBloodStock] = useState([]);
   const [error, setError] = useState(null);
 
@@ -54,78 +58,84 @@ function Home() {
   );
 
   return (
-    <section>
-      <div className={styles.blood_home_header}>
-        <h1>Estoque Sanguíneo</h1>
-        <p>Verifique a quantidade de cada tipo sanguíneo</p>
-      </div>
+    <>
+      {authenticated ? (
+        <section>
+          <div className={styles.blood_home_header}>
+            <h1>Estoque Sanguíneo</h1>
+            <p>Verifique a quantidade de cada tipo sanguíneo</p>
+          </div>
 
-      {error ? (
-        <p>{error}</p>
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            <div className={styles.blood_container}>
+              <div
+                className={`${styles.blood_group} ${styles.blood_group_positive}`}
+              >
+                <table className={styles.blood_table}>
+                  <thead>
+                    <tr>
+                      <th>Tipo</th>
+                      <th>Quantidade em Estoque</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {positiveBloodTypes.map((bloodType) => (
+                      <tr key={bloodType}>
+                        <td>{bloodType}</td>
+                        <td>{bloodStock[bloodType]}</td>
+                      </tr>
+                    ))}
+
+                    {negativeBloodTypes.map((bloodType) => (
+                      <tr key={bloodType}>
+                        <td>{bloodType}</td>
+                        <td>{bloodStock[bloodType]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className={styles.buttons_container}>
+                <div className={styles.button_content}>
+                  <Link
+                    to="/bloods/add"
+                    className={`${styles.button} ${styles.button_blue}`}
+                  >
+                    <FaPlus className={styles.button_icon} />
+                    <span>Adicionar Bolsas</span>
+                  </Link>
+                </div>
+
+                <div className={styles.button_content}>
+                  <Link
+                    to="/bloods/donations"
+                    className={`${styles.button} ${styles.button_red}`}
+                  >
+                    <FaHandHoldingHeart className={styles.button_icon} />
+                    <span>Doações Diárias</span>
+                  </Link>
+                </div>
+
+                <div className={styles.button_content}>
+                  <Link
+                    to="/bloodsManagement"
+                    className={`${styles.button} ${styles.button_yellow}`}
+                  >
+                    <FaExchangeAlt className={styles.button_icon} />
+                    <span>Controle de Entradas e Saídas</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
       ) : (
-        <div className={styles.blood_container}>
-          <div
-            className={`${styles.blood_group} ${styles.blood_group_positive}`}
-          >
-            <table className={styles.blood_table}>
-              <thead>
-                <tr>
-                  <th>Tipo</th>
-                  <th>Quantidade em Estoque</th>
-                </tr>
-              </thead>
-              <tbody>
-                {positiveBloodTypes.map((bloodType) => (
-                  <tr key={bloodType}>
-                    <td>{bloodType}</td>
-                    <td>{bloodStock[bloodType]}</td>
-                  </tr>
-                ))}
-
-                {negativeBloodTypes.map((bloodType) => (
-                  <tr key={bloodType}>
-                    <td>{bloodType}</td>
-                    <td>{bloodStock[bloodType]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className={styles.buttons_container}>
-            <div className={styles.button_content}>
-              <Link
-                to="/bloods/add"
-                className={`${styles.button} ${styles.button_blue}`}
-              >
-                <FaPlus className={styles.button_icon} />
-                <span>Adicionar Bolsas</span>
-              </Link>
-            </div>
-
-            <div className={styles.button_content}>
-              <Link
-                to="/bloods/donations"
-                className={`${styles.button} ${styles.button_red}`}
-              >
-                <FaHandHoldingHeart className={styles.button_icon} />
-                <span>Doações Diárias</span>
-              </Link>
-            </div>
-
-            <div className={styles.button_content}>
-              <Link
-                to="/bloodsManagement"
-                className={`${styles.button} ${styles.button_yellow}`}
-              >
-                <FaExchangeAlt className={styles.button_icon} />
-                <span>Controle de Entradas e Saídas</span>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <Error />
       )}
-    </section>
+    </>
   );
 }
 

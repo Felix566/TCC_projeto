@@ -15,6 +15,7 @@ import Profile from "./components/pages/User/Profile";
 import Donations from "./components/pages/Blood/Donations";
 import AddBlood from "./components/pages/Blood/AddBlood";
 import EditBlood from "./components/pages/Blood/EditBlood";
+import Error from "./components/layout/Error";
 
 /* Context */
 import { UserProvider } from "./context/UserContext";
@@ -41,7 +42,7 @@ function App() {
 
             <Route path="/home" element={<Home />} />
 
-            <Route path="*" element={<Login />} />
+            <Route path="*" element={<Error />} />
           </Routes>
         </Container>
         <Footer />
