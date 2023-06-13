@@ -35,7 +35,28 @@ function Donations() {
         },
       })
       .then((response) => {
-        setBloods(response.data.bloods);
+        // setBloods(response.data.bloods);
+        const fetchedBloods = response.data.bloods;
+
+        const updatedBloods = fetchedBloods.map((blood) => {
+          const createdAt = new Date(blood.createdAt);
+          const expirationDate = new Date(
+            createdAt.setDate(createdAt.getDate() + 30)
+          );
+          const today = new Date();
+          const timeDiff = expirationDate.getTime() - today.getTime();
+          const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+          return {
+            ...blood,
+            daysRemaining: daysRemaining >= 0 ? daysRemaining : 0,
+          };
+        });
+
+        setBloods(updatedBloods);
+      })
+      .catch((error) => {
+        console.error("Error fetching bloods: ", error);
       });
   }, [token]);
 
@@ -58,7 +79,9 @@ function Donations() {
       })
       .then((response) => {
         const updatedBloods = bloods.filter((blood) => blood._id !== id);
+
         setBloods(updatedBloods);
+
         return response.data;
       })
       .catch((err) => {
@@ -91,6 +114,7 @@ function Donations() {
                 <th>Funcionário</th>
                 <th>Data da Doação</th>
                 <th>Hora da Doação</th>
+                <th>Validade</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -102,6 +126,7 @@ function Donations() {
                   <td>{blood.user.name}</td>
                   <td>{new Date(blood.createdAt).toLocaleDateString()}</td>
                   <td>{new Date(blood.createdAt).toLocaleTimeString()}</td>
+                  <td>{blood.daysRemaining} dias</td>
                   <td>
                     <div className={styles.actions}>
                       <Link to={`/bloods/edit/${blood._id}`}>

@@ -75,9 +75,15 @@ function Navbar() {
       </ul>
       <div className={styles.darkModeToggle} onClick={toggleDarkMode}>
         {isDarkMode ? (
-          <FiSun size={22} color="#ffbf00" />
+          <>
+            <FiSun size={22} color="#ffbf00" />
+            <span>Modo Claro</span>
+          </>
         ) : (
-          <IoMoon size={22} color="#d9dcd6" />
+          <>
+            <IoMoon size={22} color="#d9dcd6" />
+            <span>Modo Escuro</span>
+          </>
         )}
       </div>
     </nav>

@@ -72,17 +72,24 @@
 .darkModeToggle {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
   background-color: transparent;
-  border-radius: 50%;
+  border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #5089ec;
+    background-color: #b309b3;
   }
+}
+
+.darkModeToggle span {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.navbar-dark .darkModeToggle span {
+  color: #fff;
 }
 
 .darkModeToggle:focus {
