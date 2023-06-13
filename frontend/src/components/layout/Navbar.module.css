@@ -50,3 +50,49 @@
 .navbar li:hover > a {
   color: #fff;
 }
+
+/* Personalização do tema escuro */
+.navbar-dark {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.navbar-dark h2 {
+  color: #fff;
+}
+
+.navbar-dark ul li a {
+  color: #fff;
+}
+
+.navbar-dark ul li:hover {
+  background-color: #555;
+}
+
+.darkModeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #5089ec;
+  }
+}
+
+.darkModeToggle:focus {
+  outline: none;
+}
+
+.darkModeToggle svg {
+  transition: transform 0.3s ease;
+}
+
+.darkModeToggle:hover svg {
+  transform: rotate(360deg);
+}

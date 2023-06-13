@@ -15,3 +15,13 @@
   border: 1px solid #777;
   border-radius: 5px;
 }
+
+/*personalização do modo escuro*/
+.form_control-dark label {
+  color: #fff;
+}
+
+.form_control-dark select {
+  background-color: #222;
+  color: #fff;
+}

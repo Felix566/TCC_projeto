@@ -9,10 +9,17 @@ import styles from "./Home.module.css";
 import { FaPlus, FaHandHoldingHeart, FaExchangeAlt } from "react-icons/fa";
 import Error from "../layout/Error";
 
+import { DarkModeContext } from "../layout/DarkModeContext";
+
 function Home() {
   const { authenticated } = useContext(Context);
   const [bloodStock, setBloodStock] = useState([]);
   const [error, setError] = useState(null);
+
+  const { isDarkMode } = useContext(DarkModeContext);
+  const containerClassName = isDarkMode
+    ? `${styles.blood_home_header} ${styles["dark"]}`
+    : styles.blood_home_header;
 
   useEffect(() => {
     const fetchBloodStock = async () => {
@@ -61,7 +68,7 @@ function Home() {
     <>
       {authenticated ? (
         <section>
-          <div className={styles.blood_home_header}>
+          <div className={containerClassName}>
             <h1>Estoque Sanguíneo</h1>
             <p>Verifique a quantidade de cada tipo sanguíneo</p>
           </div>
@@ -84,14 +91,30 @@ function Home() {
                     {positiveBloodTypes.map((bloodType) => (
                       <tr key={bloodType}>
                         <td>{bloodType}</td>
-                        <td>{bloodStock[bloodType]}</td>
+                        <td
+                          className={
+                            bloodStock[bloodType] < 10
+                              ? styles.low_stock
+                              : styles.stable_stock
+                          }
+                        >
+                          {bloodStock[bloodType]}
+                        </td>
                       </tr>
                     ))}
 
                     {negativeBloodTypes.map((bloodType) => (
                       <tr key={bloodType}>
                         <td>{bloodType}</td>
-                        <td>{bloodStock[bloodType]}</td>
+                        <td
+                          className={
+                            bloodStock[bloodType] < 10
+                              ? styles.low_stock
+                              : styles.stable_stock
+                          }
+                        >
+                          {bloodStock[bloodType]}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -121,7 +144,7 @@ function Home() {
 
                 <div className={styles.button_content}>
                   <Link
-                    to="/bloodsManagement"
+                    to="/registers"
                     className={`${styles.button} ${styles.button_yellow}`}
                   >
                     <FaExchangeAlt className={styles.button_icon} />

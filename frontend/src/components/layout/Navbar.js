@@ -5,8 +5,13 @@ import { GoHome, GoSignIn, GoSignOut } from "react-icons/go";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { BsPersonVcard } from "react-icons/bs";
 import { BiDonateBlood } from "react-icons/bi";
+import { FaExchangeAlt } from "react-icons/fa";
+
+import { FiSun } from "react-icons/fi";
+import { IoMoon } from "react-icons/io5";
 
 import styles from "./Navbar.module.css";
+import { DarkModeContext } from "./DarkModeContext";
 
 import Logo from "../../assets/img/doacao.png";
 
@@ -15,9 +20,14 @@ import { Context } from "../../context/UserContext";
 
 function Navbar() {
   const { authenticated, logout } = useContext(Context);
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
+
+  const navbarClassName = isDarkMode
+    ? `${styles.navbar} ${styles["navbar-dark"]}`
+    : styles.navbar;
 
   return (
-    <nav className={styles.navbar}>
+    <nav className={navbarClassName}>
       <div className={styles.navbar_logo}>
         <img src={Logo} alt="doação logo" />
         <h2>Projeto TCC</h2>
@@ -36,13 +46,18 @@ function Navbar() {
             </li>
 
             <li>
+              <FaExchangeAlt size={22} color="white" />
+              <Link to="/registers">Entradas e Saídas</Link>
+            </li>
+
+            <li>
               <BsPersonVcard size={22} color="white" />
               <Link to="/user/profile">Perfil</Link>
             </li>
 
             <li onClick={logout}>
               <GoSignOut size={22} color="white" />
-              Sair
+              <Link to="/">Sair</Link>
             </li>
           </>
         ) : (
@@ -58,6 +73,13 @@ function Navbar() {
           </>
         )}
       </ul>
+      <div className={styles.darkModeToggle} onClick={toggleDarkMode}>
+        {isDarkMode ? (
+          <FiSun size={22} color="#ffbf00" />
+        ) : (
+          <IoMoon size={22} color="#d9dcd6" />
+        )}
+      </div>
     </nav>
   );
 }

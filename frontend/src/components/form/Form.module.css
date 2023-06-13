@@ -33,6 +33,7 @@
 .button_container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 20px 20px;
 }
 .form_container input[type="submit"] {
@@ -81,4 +82,38 @@
 
 .form_container h1 {
   margin-bottom: 20px;
+}
+
+/* Personalização de tema escuro */
+.form_container-dark {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+.form_container-dark input {
+  background-color: #222;
+  color: #fff;
+}
+
+.form_container-dark input::placeholder {
+  color: #999;
+}
+
+.form_container-dark input[type="submit"] {
+  background-color: #4070f4;
+}
+
+.form_container-dark input[type="button"] {
+  background-color: red;
+}
+
+.form_container-dark input[type="submit"]:hover {
+  background-color: #2449af;
+}
+.form_container-dark input[type="button"]:hover {
+  background-color: #fd2b2b;
+}
+
+.form_container-dark p a {
+  color: #5867ec;
 }

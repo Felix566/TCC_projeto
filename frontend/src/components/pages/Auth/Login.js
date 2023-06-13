@@ -3,6 +3,7 @@ import Input from "../../form/Input";
 import { Link } from "react-router-dom";
 
 import styles from "../../form/Form.module.css";
+import { DarkModeContext } from "../../layout/DarkModeContext";
 
 /* context */
 import { Context } from "../../../context/UserContext";
@@ -10,6 +11,11 @@ import { Context } from "../../../context/UserContext";
 function Login() {
   const [user, setUser] = useState({});
   const { login } = useContext(Context);
+  const { isDarkMode } = useContext(DarkModeContext);
+
+  const containerClassName = isDarkMode
+    ? `${styles.form_container} ${styles["form_container-dark"]}`
+    : styles.form_container;
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -22,7 +28,7 @@ function Login() {
 
   return (
     <div className={styles.page_container}>
-      <section className={styles.form_container}>
+      <section className={containerClassName}>
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <Input

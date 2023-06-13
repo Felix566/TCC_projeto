@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import bus from "../../utils/bus";
+
+import { DarkModeContext } from "./DarkModeContext";
 
 import styles from "./Message.module.css";
 
 function Message() {
+  const { isDarkMode } = useContext(DarkModeContext);
+  const containerClassName = isDarkMode
+    ? `${styles.message} ${styles["dark"]}`
+    : styles.message;
   let [visibility, setVisibility] = useState(false);
   let [message, setMessage] = useState("");
   let [type, setType] = useState("");
@@ -22,7 +28,7 @@ function Message() {
 
   return (
     visibility && (
-      <div className={`${styles.message} ${styles[type]}`}>{message}</div>
+      <div className={`${containerClassName} ${styles[type]}`}>{message}</div>
     )
   );
 }

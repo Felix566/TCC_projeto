@@ -4,6 +4,7 @@ import Input from "../../form/Input";
 import { Link } from "react-router-dom";
 
 import styles from "../../form/Form.module.css";
+import { DarkModeContext } from "../../layout/DarkModeContext";
 
 /* contexts */
 import { Context } from "../../../context/UserContext";
@@ -11,6 +12,11 @@ import { Context } from "../../../context/UserContext";
 function Register() {
   const [user, setUser] = useState({});
   const { register } = useContext(Context);
+  const { isDarkMode } = useContext(DarkModeContext);
+
+  const containerClassName = isDarkMode
+    ? `${styles.form_container} ${styles["form_container-dark"]}`
+    : styles.form_container;
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -23,7 +29,7 @@ function Register() {
 
   return (
     <div className={styles.page_container}>
-      <section className={styles.form_container}>
+      <section className={containerClassName}>
         <h1>Registrar</h1>
         <form onSubmit={handleSubmit}>
           <Input

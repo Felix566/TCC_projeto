@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import formStyles from "./Form.module.css";
+import { DarkModeContext } from "../layout/DarkModeContext";
 
 import InputBlood from "./InputBlood";
 import Select from "./Select";
@@ -12,6 +13,10 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
   const sexs = ["Feminino", "Masculino"];
   const bloodTypes = ["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"];
   const navigate = useNavigate();
+  const { isDarkMode } = useContext(DarkModeContext);
+  const containerClassName = isDarkMode
+    ? `${formStyles.form_container} ${formStyles["form_container-dark"]}`
+    : formStyles.form_container;
 
   function handleChange(e) {
     setBlood({ ...blood, [e.target.name]: e.target.value });
@@ -48,7 +53,7 @@ function BloodForm({ handleSubmit, bloodData, btnText }) {
   }
 
   return (
-    <form onSubmit={submit} className={formStyles.form_container}>
+    <form onSubmit={submit} className={containerClassName}>
       <InputBlood
         text="Nome do doador"
         type="text"

@@ -18,3 +18,11 @@
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+/*estilização de modo escuro*/
+
+.dark .message {
+  color: #fff;
+  background-color: #333;
+  border-color: #777;
+}

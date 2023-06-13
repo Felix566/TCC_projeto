@@ -1,12 +1,13 @@
 import api from "../../../utils/api";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import ReactPaginate from "react-paginate";
 
 import styles from "./Dashboard.module.css";
+import { DarkModeContext } from "../../layout/DarkModeContext";
 
 /* hooks */
 import useFlashMessage from "../../../hooks/useFlashMessage";
@@ -17,6 +18,14 @@ function Donations() {
   const [perPage] = useState(5);
   const [token] = useState(localStorage.getItem("token") || "");
   const { setFlashMessage } = useFlashMessage();
+
+  const { isDarkMode } = useContext(DarkModeContext);
+  const bloodListClassName = isDarkMode
+    ? `${styles.bloodlist_header} ${styles.dark}`
+    : styles.bloodlist_header;
+  const containerClassName = isDarkMode
+    ? `${styles.bloodlist_container} ${styles.dark}`
+    : styles.bloodlist_container;
 
   useEffect(() => {
     api
@@ -62,7 +71,7 @@ function Donations() {
 
   return (
     <section>
-      <div className={styles.bloodlist_header}>
+      <div className={bloodListClassName}>
         <h1>Doações Diárias</h1>
         <div className={styles.actions}>
           <Link to="/bloods/add">
@@ -72,7 +81,7 @@ function Donations() {
         </div>
       </div>
 
-      <div className={styles.bloodlist_container}>
+      <div className={containerClassName}>
         {paginatedBloods.length > 0 && (
           <table className={styles.bloodlist_table}>
             <thead>
@@ -81,6 +90,7 @@ function Donations() {
                 <th>Tipo Sanguíneo</th>
                 <th>Funcionário</th>
                 <th>Data da Doação</th>
+                <th>Hora da Doação</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -91,6 +101,7 @@ function Donations() {
                   <td>{blood.bloodType}</td>
                   <td>{blood.user.name}</td>
                   <td>{new Date(blood.createdAt).toLocaleDateString()}</td>
+                  <td>{new Date(blood.createdAt).toLocaleTimeString()}</td>
                   <td>
                     <div className={styles.actions}>
                       <Link to={`/bloods/edit/${blood._id}`}>

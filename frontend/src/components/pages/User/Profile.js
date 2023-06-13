@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../utils/api";
 
 import styles from "./Profile.module.css";
 import formStyles from "../../form/Form.module.css";
+import { DarkModeContext } from "../../layout/DarkModeContext";
 
 import Input from "../../form/Input";
 
@@ -17,6 +18,7 @@ function Profile() {
   const [token] = useState(localStorage.getItem("token") || "");
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
+  const { isDarkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
     api
@@ -81,6 +83,10 @@ function Profile() {
     // setFlashMessage(data.message, msgType);
   }
 
+  const containerClassName = isDarkMode
+    ? `${formStyles.form_container} ${formStyles["form_container-dark"]}`
+    : formStyles.form_container;
+
   return (
     <section>
       <div className={styles.profile_header}>
@@ -96,7 +102,7 @@ function Profile() {
           />
         )}
       </div>
-      <form onSubmit={handleSubmit} className={formStyles.form_container}>
+      <form onSubmit={handleSubmit} className={containerClassName}>
         <Input
           text="Imagem"
           type="file"
