@@ -26,6 +26,9 @@ function Donations() {
   const containerClassName = isDarkMode
     ? `${styles.bloodlist_container} ${styles.dark}`
     : styles.bloodlist_container;
+  const expirationClassName = isDarkMode
+    ? `${styles.expiration} ${styles.dark}`
+    : styles.expiration;
 
   useEffect(() => {
     api
@@ -126,7 +129,13 @@ function Donations() {
                   <td>{blood.user.name}</td>
                   <td>{new Date(blood.createdAt).toLocaleDateString()}</td>
                   <td>{new Date(blood.createdAt).toLocaleTimeString()}</td>
-                  <td>{blood.daysRemaining} dias</td>
+                  <td
+                    className={`${expirationClassName} ${
+                      blood.daysRemaining < 15 ? styles.expiring : ""
+                    }`}
+                  >
+                    {blood.daysRemaining} dias
+                  </td>
                   <td>
                     <div className={styles.actions}>
                       <Link to={`/bloods/edit/${blood._id}`}>

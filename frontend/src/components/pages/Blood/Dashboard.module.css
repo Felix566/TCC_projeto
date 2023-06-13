@@ -168,3 +168,8 @@
 .dark .pagination_break {
   color: #fff;
 }
+
+.expiring {
+  background-color: #f44336;
+  color: #fff;
+}
