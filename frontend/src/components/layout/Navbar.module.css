@@ -53,7 +53,7 @@
 
 /* Personalização do tema escuro */
 .navbar-dark {
-  background-color: #e767f8;
+  background-color: #453747;
   color: #fff;
 }
 
@@ -78,7 +78,7 @@
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #b309b3;
+    background-color: #310931;
   }
 }
 

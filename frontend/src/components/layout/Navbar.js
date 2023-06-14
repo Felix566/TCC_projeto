@@ -47,7 +47,7 @@ function Navbar() {
 
             <li>
               <FaExchangeAlt size={22} color="white" />
-              <Link to="/registers">Entradas e Saídas</Link>
+              <Link to="/entries">Entradas e Saídas</Link>
             </li>
 
             <li>
