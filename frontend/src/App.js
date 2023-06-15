@@ -1,12 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
 
 /* Components */
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Container from "./components/layout/Container";
 import Message from "./components/layout/Message";
-import { DarkModeProvider } from "./components/layout/DarkModeContext";
+import {
+  DarkModeContext,
+  DarkModeProvider,
+} from "./components/layout/DarkModeContext";
 
 /* Pages */
 import Login from "./components/pages/Auth/Login";
@@ -29,6 +32,7 @@ import DashboardExits from "./components/pages/Control/DashboardExits";
 import { UserProvider } from "./context/UserContext";
 
 function App() {
+  const { isDarkMode } = useContext(DarkModeContext);
   return (
     <Router>
       <DarkModeProvider>
