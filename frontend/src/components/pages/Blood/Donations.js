@@ -98,11 +98,11 @@ function Donations() {
   return (
     <section>
       <div className={bloodListClassName}>
-        <h1>Doações Diárias</h1>
+        <h1>Registros Diários</h1>
         <div className={styles.actions}>
           <Link to="/bloods/add">
             <FaPlus className={styles.icon} />
-            Adicionar Bolsas
+            Adicionar Registros
           </Link>
         </div>
       </div>
@@ -112,7 +112,7 @@ function Donations() {
           <table className={styles.bloodlist_table}>
             <thead>
               <tr>
-                <th>Nome do Doador</th>
+                <th>Movimentação</th>
                 <th>Tipo Sanguíneo</th>
                 <th>Funcionário</th>
                 <th>Data da Doação</th>
@@ -124,7 +124,7 @@ function Donations() {
             <tbody>
               {paginatedBloods.map((blood) => (
                 <tr key={blood._id}>
-                  <td>{blood.donator}</td>
+                  <td>{blood.inventoryType}</td>
                   <td>{blood.bloodType}</td>
                   <td>{blood.user.name}</td>
                   <td>{new Date(blood.createdAt).toLocaleDateString()}</td>

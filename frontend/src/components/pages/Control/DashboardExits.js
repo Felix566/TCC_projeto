@@ -14,7 +14,7 @@ import { DarkModeContext } from "../../layout/DarkModeContext";
 import useFlashMessage from "../../../hooks/useFlashMessage";
 
 function DashboardExits() {
-  const [exits, setExits] = useState([]);
+  const [bloods, setBloods] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage] = useState(5);
   const [token] = useState(localStorage.getItem("token") || "");
@@ -30,13 +30,13 @@ function DashboardExits() {
 
   useEffect(() => {
     api
-      .get("/exits/outputs", {
+      .get("/bloods", {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        setExits(response.data.exits);
+        setBloods(response.data.bloods);
       })
       .catch((error) => {
         console.error(error);
@@ -47,22 +47,27 @@ function DashboardExits() {
     setCurrentPage(selectedPage.selected);
   };
 
+  //filtrar os registros com inventoryType igual a "Saída"
+  const filteredExits = bloods.filter(
+    (blood) => blood.inventoryType === "Saída"
+  );
+
   const offset = currentPage * perPage;
-  const paginatedExits = exits.slice(offset, offset + perPage);
-  const exitsPageCount = Math.ceil(exits.length / perPage);
+  const paginatedExits = filteredExits.slice(offset, offset + perPage);
+  const exitsPageCount = Math.ceil(filteredExits.length / perPage);
 
   async function removeExits(id) {
     let msgType = "success";
 
     const data = await api
-      .delete(`/exits/${id}`, {
+      .delete(`/bloods/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        const updatedExits = exits.filter((exit) => exit._id !== id);
-        setExits(updatedExits);
+        const updatedExits = bloods.filter((blood) => blood._id !== id);
+        setBloods(updatedExits);
         return response.data;
       })
       .catch((err) => {
@@ -78,9 +83,9 @@ function DashboardExits() {
       <div className={bloodListClassName}>
         <h1>Saídas Realizadas</h1>
         <div className={styles.actions}>
-          <Link to="/createOutput">
+          <Link to="/bloods/add">
             <FaPlus className={styles.icon} />
-            Adicionar Saída
+            Adicionar
           </Link>
           <Link to="/entries">
             <HiArrowDownTray className={styles.icon} />
@@ -94,38 +99,40 @@ function DashboardExits() {
           <table className={styles.bloodlist_table}>
             <thead>
               <tr>
-                <th>Quantidade de Bolsas</th>
-                <th>Tipo Sanguíneo</th>
-                <th>Recebedor</th>
-                <th>Tipo de Saída</th>
+                <th>Quantidade</th>
+                <th>Tipagem</th>
+                <th>Motivo da Saída</th>
                 <th>Destino</th>
-                <th>Responsável</th>
                 <th>Data</th>
                 <th>Horário</th>
-                <th>Observações</th>
+                <th>Responsável</th>
+                <th>Notas</th>
                 <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              {paginatedExits.map((exit) => (
-                <tr key={exit._id}>
-                  <td>{exit.bloodQuantity}</td>
-                  <td>{exit.bloodType}</td>
-                  <td>{exit.recipientName}</td>
-                  <td>{exit.exitType}</td>
-                  <td>{exit.destination}</td>
-                  <td>{exit.user.name}</td>
-                  <td>{new Date(exit.createdAt).toLocaleDateString()}</td>
-                  <td>{new Date(exit.createdAt).toLocaleTimeString()}</td>
-                  <td>{exit.exitNotes}</td>
+              {paginatedExits.map((blood) => (
+                <tr key={blood._id}>
+                  <td>{blood.quantity}</td>
+                  <td>{blood.bloodType}</td>
+                  <td>{blood.exitType}</td>
+                  <td>
+                    {blood.destination !== undefined && blood.destination !== ""
+                      ? blood.destination
+                      : "-----"}
+                  </td>
+                  <td>{new Date(blood.createdAt).toLocaleDateString()}</td>
+                  <td>{new Date(blood.createdAt).toLocaleTimeString()}</td>
+                  <td>{blood.user.name}</td>
+                  <td>{blood.notes}</td>
                   <td>
                     <div className={styles.actions}>
-                      <Link to={`/exits/edit/${exit._id}`}>
+                      <Link to={`/bloods/edit/${blood._id}`}>
                         <FaEdit className={styles.icon} /> Editar
                       </Link>
                       <button
                         onClick={() => {
-                          removeExits(exit._id);
+                          removeExits(blood._id);
                         }}
                       >
                         <FaTrash className={styles.icon} color="red" />

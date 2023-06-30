@@ -10,6 +10,9 @@ import BloodForm from "../../form/BloodForm";
 /* hooks */
 import useFlashMessage from "../../../hooks/useFlashMessage";
 
+/*utils*/
+import { removeEmptyProperties } from "../../../utils/removeObjectNullValues";
+
 function EditBlood() {
   const [blood, setBlood] = useState({});
   const [token] = useState(localStorage.getItem("token") || "");
@@ -33,11 +36,15 @@ function EditBlood() {
     let msgType = "success";
 
     try {
-      const response = await api.patch(`/bloods/${blood._id}`, blood, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      });
+      const response = await api.patch(
+        `/bloods/${blood._id}`,
+        removeEmptyProperties(blood),
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        }
+      );
 
       const data = response.data;
       setFlashMessage(data.message, msgType);
@@ -52,7 +59,7 @@ function EditBlood() {
   return (
     <section>
       <div className={styles.addBlood_header}>
-        <h1>Editar sangue</h1>
+        <h1>Editar Registro</h1>
         <p>Após a edição, os novos dados serão atualizados no sistema</p>
       </div>
       {blood._id && (

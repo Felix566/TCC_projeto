@@ -5,24 +5,32 @@ const Blood = mongoose.model(
   "Blood",
   new Schema(
     {
-      donator: {
+      inventoryType: {
         type: String,
         required: true,
       },
-      cpf: {
+      bloodType: {
         type: String,
         required: true,
-        unique: true,
       },
-      nasc: {
-        type: Date,
-      },
-      age: {
+      quantity: {
         type: Number,
+        required: true,
       },
       phone: {
         type: String,
-        required: true,
+      },
+      notes: {
+        type: String,
+      },
+      entryType: {
+        type: String,
+      },
+      donator: {
+        type: String,
+      },
+      age: {
+        type: Number,
       },
       marital: {
         type: String,
@@ -30,12 +38,17 @@ const Blood = mongoose.model(
       sex: {
         type: String,
       },
-      bloodVolume: {
+      donorName: {
         type: String,
       },
-      bloodType: {
+      exitType: {
         type: String,
-        required: true,
+      },
+      recipientName: {
+        type: String,
+      },
+      destination: {
+        type: String,
       },
       user: {
         type: Object,

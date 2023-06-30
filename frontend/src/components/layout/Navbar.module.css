@@ -76,10 +76,6 @@
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #310931;
-  }
 }
 
 .darkModeToggle span {
@@ -96,14 +92,30 @@
   outline: none;
 }
 
-.darkModeToggle svg {
+.navbar-dark li:hover > a {
+  color: #080101;
+}
+
+.iconLeft {
+  margin-right: 10px;
+}
+
+.iconLeft svg {
   transition: transform 0.3s ease;
 }
 
-.darkModeToggle:hover svg {
+.iconLeft:hover svg {
   transform: rotate(360deg);
 }
 
-.navbar-dark li:hover > a {
-  color: #080101;
+.iconRight {
+  margin-left: 10px;
+}
+
+.iconRight svg {
+  transition: transform 0.3s ease;
+}
+
+.iconRight:hover svg {
+  transform: rotate(360deg);
 }

@@ -49,8 +49,13 @@ function Home() {
 
     //Contar a quantidade de cada tipo sanguíneo com base nos dados da API
     stockData.forEach((blood) => {
-      const { bloodType } = blood;
-      counts[bloodType] += 1;
+      // console.log(blood);
+      const { bloodType, inventoryType, quantity } = blood;
+      if (inventoryType === "Entrada") {
+        counts[bloodType] += quantity;
+      } else if (inventoryType === "Saída") {
+        counts[bloodType] -= quantity;
+      }
     });
 
     return counts;
@@ -128,7 +133,7 @@ function Home() {
                     className={`${styles.button} ${styles.button_blue}`}
                   >
                     <FaPlus className={styles.button_icon} />
-                    <span>Adicionar Bolsas</span>
+                    <span>Adicionar Registros</span>
                   </Link>
                 </div>
 
@@ -138,13 +143,13 @@ function Home() {
                     className={`${styles.button} ${styles.button_red}`}
                   >
                     <FaHandHoldingHeart className={styles.button_icon} />
-                    <span>Doações Diárias</span>
+                    <span>Registros Diários</span>
                   </Link>
                 </div>
 
                 <div className={styles.button_content}>
                   <Link
-                    to="/registers"
+                    to="/entries"
                     className={`${styles.button} ${styles.button_yellow}`}
                   >
                     <FaExchangeAlt className={styles.button_icon} />

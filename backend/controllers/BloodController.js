@@ -9,30 +9,31 @@ module.exports = class BloodController {
   // create a bag blood
   static async create(req, res) {
     const {
-      donator,
-      cpf,
-      nasc,
-      age,
+      inventoryType,
+      bloodType,
+      quantity,
       phone,
+      notes,
+      entryType,
+      donator,
+      age,
       marital,
       sex,
-      bloodVolume,
-      bloodType,
+      donorName,
+      exitType,
+      recipientName,
+      destination,
     } = req.body;
 
     //validations
-    if (!donator) {
+    if (!inventoryType) {
       return res
         .status(422)
-        .json({ message: "O nome do doador é obrigatório!" });
+        .json({ message: "O tipo de registro é obrigatório!" });
     }
 
-    if (!cpf) {
-      return res.status(422).json({ message: "O CPF é obrigatório!" });
-    }
-
-    if (!phone) {
-      return res.status(422).json({ message: "O telefone é obrigatório!" });
+    if (!quantity) {
+      return res.status(422).json({ message: "A quantidade é obrigatória!" });
     }
 
     if (!bloodType) {
@@ -47,15 +48,7 @@ module.exports = class BloodController {
 
     // create a bag blood
     const blood = new Blood({
-      donator: donator,
-      cpf: cpf,
-      nasc: nasc,
-      age: age,
-      phone: phone,
-      marital: marital,
-      sex: sex,
-      bloodVolume: bloodVolume,
-      bloodType: bloodType,
+      ...req.body,
       user: {
         _id: user._id,
         name: user.name,
@@ -65,7 +58,7 @@ module.exports = class BloodController {
     try {
       const newBlood = await blood.save();
       return res.status(201).json({
-        message: "Bolsa sanguínea adicionada com sucesso!",
+        message: "Registro adicionado com sucesso!",
         blood: newBlood,
       });
     } catch (error) {
@@ -86,11 +79,6 @@ module.exports = class BloodController {
   static async getBloodById(req, res) {
     const id = req.params.id;
 
-    // check if id is valid
-    if (!ObjectId.isValid(id)) {
-      return res.status(422).json({ message: "ID inválido!" });
-    }
-
     // check if blood exists
     const blood = await Blood.findOne({ _id: id });
 
@@ -104,11 +92,6 @@ module.exports = class BloodController {
   //remove a blood
   static async removeBloodById(req, res) {
     const id = req.params.id;
-
-    // check if id is valid
-    if (!ObjectId.isValid(id)) {
-      return res.status(422).json({ message: "ID inválido!" });
-    }
 
     // check if blood exists
     const blood = await Blood.findOne({ _id: id });
@@ -126,63 +109,31 @@ module.exports = class BloodController {
     const id = req.params.id;
 
     const {
-      donator,
-      cpf,
-      nasc,
-      age,
+      inventoryType,
+      bloodType,
+      quantity,
       phone,
+      notes,
+      entryType,
+      donator,
+      age,
       marital,
       sex,
-      bloodVolume,
-      bloodType,
+      donorName,
+      exitType,
+      recipientName,
+      destination,
     } = req.body;
 
-    const updatedData = {};
+    const updatedData = {
+      ...req.body,
+    };
 
     // check if blood exists
     const blood = await Blood.findOne({ _id: id });
 
     if (!blood) {
       return res.status(404).json({ message: "Bolsa não encontrada!" });
-    }
-
-    //validations
-    if (!donator) {
-      return res
-        .status(422)
-        .json({ message: "O nome do doador é obrigatório!" });
-    } else {
-      updatedData.donator = donator;
-    }
-
-    if (!cpf) {
-      return res.status(422).json({ message: "O CPF é obrigatório!" });
-    } else {
-      updatedData.cpf = cpf;
-    }
-
-    updatedData.nasc = nasc;
-
-    updatedData.age = age;
-
-    if (!phone) {
-      return res.status(422).json({ message: "O telefone é obrigatório!" });
-    } else {
-      updatedData.phone = phone;
-    }
-
-    updatedData.marital = marital;
-
-    updatedData.sex = sex;
-
-    updatedData.bloodVolume = bloodVolume;
-
-    if (!bloodType) {
-      return res
-        .status(422)
-        .json({ message: "A tipagem sanguínea é obrigatória!" });
-    } else {
-      updatedData.bloodType = bloodType;
     }
 
     await Blood.findByIdAndUpdate(id, updatedData);

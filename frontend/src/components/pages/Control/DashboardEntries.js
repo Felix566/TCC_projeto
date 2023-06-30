@@ -14,7 +14,7 @@ import { DarkModeContext } from "../../layout/DarkModeContext";
 import useFlashMessage from "../../../hooks/useFlashMessage";
 
 function DashboardEntries() {
-  const [entries, setEntries] = useState([]);
+  const [bloods, setBloods] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage] = useState(5);
   const [token] = useState(localStorage.getItem("token") || "");
@@ -30,13 +30,13 @@ function DashboardEntries() {
 
   useEffect(() => {
     api
-      .get("/entries/inputs", {
+      .get("/bloods", {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        setEntries(response.data.entries);
+        setBloods(response.data.bloods);
       })
       .catch((error) => {
         console.error(error);
@@ -47,22 +47,27 @@ function DashboardEntries() {
     setCurrentPage(selectedPage.selected);
   };
 
+  //filtrar os registros com inventoryType igual a "Entrada"
+  const filteredEntries = bloods.filter(
+    (blood) => blood.inventoryType === "Entrada"
+  );
+
   const offset = currentPage * perPage;
-  const paginatedEntries = entries.slice(offset, offset + perPage);
-  const entriesPageCount = Math.ceil(entries.length / perPage);
+  const paginatedEntries = filteredEntries.slice(offset, offset + perPage);
+  const entriesPageCount = Math.ceil(filteredEntries.length / perPage);
 
   async function removeEntry(id) {
     let msgType = "success";
 
     const data = await api
-      .delete(`/entries/${id}`, {
+      .delete(`/bloods/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        const updatedEntries = entries.filter((entry) => entry._id !== id);
-        setEntries(updatedEntries);
+        const updatedEntries = bloods.filter((blood) => blood._id !== id);
+        setBloods(updatedEntries);
         return response.data;
       })
       .catch((err) => {
@@ -78,9 +83,9 @@ function DashboardEntries() {
       <div className={bloodListClassName}>
         <h1>Entradas Realizadas</h1>
         <div className={styles.actions}>
-          <Link to="/createInput">
+          <Link to="/bloods/add">
             <FaPlus className={styles.icon} />
-            Adicionar Entrada
+            Adicionar
           </Link>
           <Link to="/exits">
             <HiArrowUpTray className={styles.icon} />
@@ -94,38 +99,40 @@ function DashboardEntries() {
           <table className={styles.bloodlist_table}>
             <thead>
               <tr>
-                <th>Quantidade de Bolsas</th>
-                <th>Tipo Sanguíneo</th>
+                <th>Quantidade</th>
+                <th>Tipagem</th>
+                <th>Motivo da Entrada</th>
                 <th>Doador</th>
-                <th>Tipo de Entrada</th>
-                <th>Destino</th>
-                <th>Rsponsável</th>
+                <th>Responsável</th>
                 <th>Data</th>
                 <th>Horário</th>
-                <th>Observações</th>
+                <th>Notas</th>
                 <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              {paginatedEntries.map((entry) => (
-                <tr key={entry._id}>
-                  <td>{entry.bloodQuantity}</td>
-                  <td>{entry.bloodType}</td>
-                  <td>{entry.donorName}</td>
-                  <td>{entry.entryType}</td>
-                  <td>{entry.destination}</td>
-                  <td>{entry.user.name}</td>
-                  <td>{new Date(entry.createdAt).toLocaleDateString()}</td>
-                  <td>{new Date(entry.createdAt).toLocaleTimeString()}</td>
-                  <td>{entry.entryNotes}</td>
+              {paginatedEntries.map((blood) => (
+                <tr key={blood._id}>
+                  <td>{blood.quantity}</td>
+                  <td>{blood.bloodType}</td>
+                  <td>{blood.entryType}</td>
+                  <td>
+                    {blood.donator !== undefined && blood.donator !== ""
+                      ? blood.donator
+                      : "-----"}
+                  </td>
+                  <td>{blood.user.name}</td>
+                  <td>{new Date(blood.createdAt).toLocaleDateString()}</td>
+                  <td>{new Date(blood.createdAt).toLocaleTimeString()}</td>
+                  <td>{blood.notes}</td>
                   <td>
                     <div className={styles.actions}>
-                      <Link to={`/entries/edit/${entry._id}`}>
+                      <Link to={`/bloods/edit/${blood._id}`}>
                         <FaEdit className={styles.icon} /> Editar
                       </Link>
                       <button
                         onClick={() => {
-                          removeEntry(entry._id);
+                          removeEntry(blood._id);
                         }}
                       >
                         <FaTrash className={styles.icon} color="red" />

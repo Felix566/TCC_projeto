@@ -11,6 +11,9 @@ import BloodForm from "../../form/BloodForm";
 /* hooks */
 import useFlashMessage from "../../../hooks/useFlashMessage";
 
+/*utils*/
+import { removeEmptyProperties } from "../../../utils/removeObjectNullValues";
+
 function AddBlood() {
   const [token] = useState(localStorage.getItem("token") || "");
   const { setFlashMessage } = useFlashMessage();
@@ -22,17 +25,9 @@ function AddBlood() {
     const data = await api
       .post(
         "/bloods/create",
-        {
-          donator: blood.donator,
-          cpf: blood.cpf,
-          nasc: blood.nasc,
-          age: blood.age,
-          phone: blood.phone,
-          marital: blood.marital,
-          sex: blood.sex,
-          bloodVolume: blood.bloodVolume,
-          bloodType: blood.bloodType,
-        },
+
+        removeEmptyProperties(blood),
+
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(token)}`,
@@ -53,7 +48,7 @@ function AddBlood() {
   return (
     <section className={styles.addBlood_header}>
       <div>
-        <h1>Adicione uma Bolsa</h1>
+        <h1>Adicione um Registro</h1>
       </div>
       <BloodForm handleSubmit={registerBlood} btnText="Adicionar" />
     </section>

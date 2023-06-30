@@ -18,10 +18,6 @@ import AddBlood from "./components/pages/Blood/AddBlood";
 import EditBlood from "./components/pages/Blood/EditBlood";
 import Error from "./components/layout/Error";
 
-import RegistersInputs from "./components/pages/Control/RegistersInputs";
-import RegistersOutputs from "./components/pages/Control/RegistersOutputs";
-import EditEntrie from "./components/pages/Control/EditEntrie";
-import EditExit from "./components/pages/Control/EditExit";
 import DashboardEntries from "./components/pages/Control/DashboardEntries";
 import DashboardExits from "./components/pages/Control/DashboardExits";
 
@@ -51,17 +47,9 @@ function App() {
 
               <Route path="/home" element={<Home />} />
 
-              <Route path="/createInput" element={<RegistersInputs />} />
-
               <Route path="/entries" element={<DashboardEntries />} />
 
-              <Route path="/entries/edit/:id" element={<EditEntrie />} />
-
-              <Route path="/createOutput" element={<RegistersOutputs />} />
-
               <Route path="/exits" element={<DashboardExits />} />
-
-              <Route path="/exits/edit/:id" element={<EditExit />} />
 
               <Route path="*" element={<Error />} />
             </Routes>

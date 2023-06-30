@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useContext } from "react";
+import Switch from "react-switch";
 
 import { GoHome, GoSignIn, GoSignOut } from "react-icons/go";
 import { IoPersonAddSharp } from "react-icons/io5";
@@ -21,6 +22,9 @@ import { Context } from "../../context/UserContext";
 function Navbar() {
   const { authenticated, logout } = useContext(Context);
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
+
+  const switchOnColor = "#ffbf00";
+  const switchOffColor = "#d9dcd6";
 
   const navbarClassName = isDarkMode
     ? `${styles.navbar} ${styles["navbar-dark"]}`
@@ -73,18 +77,25 @@ function Navbar() {
           </>
         )}
       </ul>
-      <div className={styles.darkModeToggle} onClick={toggleDarkMode}>
-        {isDarkMode ? (
-          <>
-            <FiSun size={22} color="#ffbf00" />
-            <span>Modo Claro</span>
-          </>
-        ) : (
-          <>
-            <IoMoon size={22} color="#d9dcd6" />
-            <span>Modo Escuro</span>
-          </>
-        )}
+
+      <div className={styles.darkModeToggle}>
+        <div className={styles.iconLeft}>
+          <FiSun size={26} color={switchOnColor} />
+        </div>
+        <Switch
+          checked={isDarkMode}
+          onChange={toggleDarkMode}
+          onColor={switchOffColor}
+          offColor={switchOnColor}
+          checkedIcon={false}
+          uncheckedIcon={false}
+          height={33}
+          width={53}
+          handleDiameter={28}
+        />
+        <div className={styles.iconRight}>
+          <IoMoon size={26} color={switchOffColor} />
+        </div>
       </div>
     </nav>
   );
