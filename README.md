@@ -46,9 +46,9 @@
 
 - [x] Cadastrar funcionários responsáveis por utilizar o sistema
 - [x] Visualizar informações cadastrais
-- [ ] Visualização das bolsas em estoque
+- [x] Visualização das bolsas em estoque
 - [x] Adicionar bolsas sanguíneas ao estoque
-- [ ] Controle de entrada e saída no estoque
+- [x] Controle de entrada e saída no estoque
 - [ ] Preenchimento e visualização de relatório mensal
 
 ---
