@@ -1,13 +1,16 @@
 import api from "../../../utils/api";
 
 import { useState, useEffect, useContext } from "react";
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaFilePdf } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import ReactPaginate from "react-paginate";
 
 import styles from "./Dashboard.module.css";
 import { DarkModeContext } from "../../layout/DarkModeContext";
+
+/*utils */
+import registrosPDF from "../../../utils/geradorPDF";
 
 /* hooks */
 import useFlashMessage from "../../../hooks/useFlashMessage";
@@ -95,6 +98,13 @@ function Donations() {
     setFlashMessage(data.message, msgType);
   }
 
+  const handleGeneratePDF = () => {
+    const entries = bloods.filter((blood) => blood.inventoryType === "Entrada");
+    const exits = bloods.filter((blood) => blood.inventoryType === "Saída");
+
+    registrosPDF(entries, exits);
+  };
+
   return (
     <section>
       <div className={bloodListClassName}>
@@ -104,6 +114,11 @@ function Donations() {
             <FaPlus className={styles.icon} />
             Adicionar Registros
           </Link>
+
+          <button onClick={handleGeneratePDF}>
+            <FaFilePdf className={styles.icon} />
+            Gerar Resumo em PDF
+          </button>
         </div>
       </div>
 
